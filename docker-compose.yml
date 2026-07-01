@@ -1,10 +1,18 @@
 services:
   web:
-    image: php:8.3-apache
+    build: .
     ports:
       - "8080:80"
     volumes:
       - ./public:/var/www/html
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: "3306"
+      MYSQL_DATABASE: access
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
   db:
     image: mysql:8.0
     environment:
