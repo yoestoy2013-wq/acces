@@ -1,20 +1,15 @@
 <?php
-$f='eventos.json';
-$ev=file_exists($f)?json_decode(file_get_contents($f),true):[];
-if(isset($_GET['delete'])){
-$id=(int)$_GET['delete'];
-$ev=array_values(array_filter($ev,fn($x)=>$x['id']!=$id));
-foreach($ev as $i=>&$r){$r['id']=$i+1;}
-file_put_contents($f,json_encode($ev));
-header('Location: eventos.php');exit;
+require_once __DIR__ . '/../models/Evento.php';
+
+$eventoModel = new Evento();
+$q = isset($_GET['q']) ? trim($_GET['q']) : '';
+if (isset($_GET['delete'])) {
+    $id = (int)$_GET['delete'];
+    $eventoModel->delete($id);
+    header('Location: eventos.php');
+    exit;
 }
-$q=isset($_GET['q'])?trim($_GET['q']):'';
-$q=isset($_GET['q'])?trim($_GET['q']):'';
-if($q!==''){
- $ev=array_values(array_filter($ev,function($e)use($q){
-   return stripos($e['nombre'],$q)!==false||stripos($e['lugar'],$q)!==false;
- }));
-}
+$ev = $eventoModel->all($q);
 ?>
 <!DOCTYPE html><html><head><meta charset="utf-8"><title>Eventos</title>
 <link rel="stylesheet" href="assets/css/style.css"></head><body>

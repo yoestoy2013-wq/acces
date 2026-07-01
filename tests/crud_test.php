@@ -1,5 +1,9 @@
 <?php
 
+putenv('MYSQL_DATABASE=access_test');
+putenv('DB_NAME=access_test');
+require_once __DIR__ . '/../models/Evento.php';
+
 function getServerConnection(): PDO
 {
     $config = require __DIR__ . '/../config/config.php';
@@ -19,12 +23,10 @@ function getServerConnection(): PDO
     return new PDO($dsn, $db['user'], $db['password'], $options);
 }
 
-function runTest(): void
+function createTestDatabase(PDO $pdo): void
 {
-    echo "Running phase 1 CRUD smoke test...\n";
-
-    $pdo = getServerConnection();
-    $pdo->exec('CREATE DATABASE IF NOT EXISTS access_test CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
+    $pdo->exec('DROP DATABASE IF EXISTS access_test');
+    $pdo->exec('CREATE DATABASE access_test CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
     $pdo->exec('USE access_test');
 
     $schema = file_get_contents(__DIR__ . '/../database/migrations/001_create_schema.sql');
@@ -47,23 +49,71 @@ function runTest(): void
         }
         $pdo->exec($statement);
     }
+}
 
-    echo "Database schema loaded for test.\n";
+function runTest(): void
+{
+    echo "Running phase 2 Eventos CRUD test...\n";
 
-    $pdo->exec("INSERT INTO eventos (nombre, fecha, lugar) VALUES ('Test Event', '2026-07-01', 'Test Venue')");
-    $stmt = $pdo->query('SELECT COUNT(*) AS total FROM eventos');
-    $row = $stmt->fetch();
+    $pdo = getServerConnection();
+    createTestDatabase($pdo);
 
-    if ((int)$row['total'] !== 1) {
-        throw new RuntimeException('Expected one event after insert.');
+    $eventoModel = new Evento();
+
+    echo "Creating event...\n";
+    $id = $eventoModel->create([
+        'nombre' => 'Test Event',
+        'fecha' => '2026-07-01',
+        'lugar' => 'Test Venue',
+    ]);
+    if ($id <= 0) {
+        throw new RuntimeException('Failed to create event.');
     }
 
-    echo "CRUD smoke test passed.\n";
+    echo "Finding event...\n";
+    $created = $eventoModel->find($id);
+    if ($created === null || $created['nombre'] !== 'Test Event') {
+        throw new RuntimeException('Created event could not be found or has wrong data.');
+    }
+
+    echo "Updating event...\n";
+    $updated = $eventoModel->update($id, [
+        'nombre' => 'Updated Event',
+        'fecha' => '2026-07-02',
+        'lugar' => 'Updated Venue',
+    ]);
+    if (!$updated) {
+        throw new RuntimeException('Failed to update event.');
+    }
+
+    $found = $eventoModel->find($id);
+    if ($found === null || $found['nombre'] !== 'Updated Event' || $found['lugar'] !== 'Updated Venue') {
+        throw new RuntimeException('Updated event data is incorrect.');
+    }
+
+    echo "Searching event...\n";
+    $results = $eventoModel->all('Updated');
+    if (count($results) !== 1 || $results[0]['id'] != $id) {
+        throw new RuntimeException('Search did not return the expected event.');
+    }
+
+    echo "Deleting event...\n";
+    $deleted = $eventoModel->delete($id);
+    if (!$deleted) {
+        throw new RuntimeException('Failed to delete event.');
+    }
+
+    $deletedEvent = $eventoModel->find($id);
+    if ($deletedEvent !== null) {
+        throw new RuntimeException('Event was not deleted.');
+    }
+
+    echo "Eventos CRUD test passed.\n";
 }
 
 try {
     runTest();
-    echo "Phase 1 automatic test completed successfully.\n";
+    echo "Phase 2 automatic test completed successfully.\n";
 } catch (Throwable $e) {
     echo 'Test failed: ' . $e->getMessage() . "\n";
     exit(1);
