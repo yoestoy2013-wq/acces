@@ -1,1 +1,1 @@
-<?php echo '<h1>INVITADOS</h1><p>Modulo en construccion</p>'; ?>
+<!doctype html><html><head><meta charset='utf-8'><title>Invitados</title><link rel='stylesheet' href='assets/css/style.css'></head><body><div class='app' style='max-width:900px;text-align:left'><h1>INVITADOS</h1><p>Módulo en construcción</p><p><a href='eventos.php'>Volver</a></p></div></body></html>
