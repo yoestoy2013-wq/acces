@@ -18,8 +18,11 @@ class Evento
             return $stmt->fetchAll();
         }
 
-        $stmt = $this->db->prepare('SELECT * FROM eventos WHERE nombre LIKE :q OR lugar LIKE :q ORDER BY id DESC');
-        $stmt->execute(['q' => '%' . $q . '%']);
+        $stmt = $this->db->prepare('SELECT * FROM eventos WHERE nombre LIKE :q1 OR lugar LIKE :q2 ORDER BY id DESC');
+        $stmt->execute([
+            'q1' => '%' . $q . '%',
+            'q2' => '%' . $q . '%',
+        ]);
         return $stmt->fetchAll();
     }
 
