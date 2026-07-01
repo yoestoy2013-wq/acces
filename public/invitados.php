@@ -1,0 +1,1 @@
+<?php echo '<h1>INVITADOS</h1><p>Modulo en construccion</p>'; ?>
