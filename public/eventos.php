@@ -30,7 +30,7 @@ $ev = $eventoModel->all($q);
 foreach($ev as $e){ ?>
 <tr>
 <td><?=$e['id']?></td><td><?=$e['nombre']?></td><td><?=$e['fecha']?></td><td><?=$e['lugar']?></td>
-<td><div class="actions"><a href="nuevo_evento.php?edit=<?=$e['id']?>"><button>✏️</button></a><a href="eventos.php?delete=<?=$e['id']?>" onclick="return confirm('¿Eliminar evento?')"><button>🗑️</button></a><a href='invitados.php?evento=<?=$e['id']?>'><button>👥</button></a><a href='tickets.php?evento=<?=$e['id']?>'><button>🎟️</button></a></div></td>
+<td><div class="actions"><a href="nuevo_evento.php?edit=<?=$e['id']?>"><button>✏️</button></a><a href="eventos.php?delete=<?=$e['id']?>" onclick="return confirm('¿Eliminar evento?')"><button>🗑️</button></a><a href='invitados.php?evento=<?=$e['id']?>'><button>👥</button></a><a href='tickets.php?evento=<?=$e['id']?>'><button>🎟️</button></a><a href='checkin.php?evento=<?=$e['id']?>'><button>✅</button></a></div></td>
 </tr>
 <?php }} ?>
 </table>
