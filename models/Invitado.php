@@ -54,9 +54,10 @@ class Invitado
     public function create(array $data): int
     {
         $uniqueId = $this->generateUniqueId();
-        $stmt = $this->db->prepare('INSERT INTO invitados (evento_id, ticket_type_id, nombre, apellido, dni, email, telefono, observaciones, unique_id) VALUES (:evento_id, :ticket_type_id, :nombre, :apellido, :dni, :email, :telefono, :observaciones, :unique_id)');
+        $stmt = $this->db->prepare('INSERT INTO invitados (evento_id, colaborador_id, ticket_type_id, nombre, apellido, dni, email, telefono, observaciones, unique_id) VALUES (:evento_id, :colaborador_id, :ticket_type_id, :nombre, :apellido, :dni, :email, :telefono, :observaciones, :unique_id)');
         $stmt->execute([
             'evento_id' => $data['evento_id'],
+            'colaborador_id' => $data['colaborador_id'] ?? null,
             'ticket_type_id' => $data['ticket_type_id'],
             'nombre' => $data['nombre'],
             'apellido' => $data['apellido'],
@@ -71,9 +72,10 @@ class Invitado
 
     public function update(int $id, array $data): bool
     {
-        $stmt = $this->db->prepare('UPDATE invitados SET ticket_type_id = :ticket_type_id, nombre = :nombre, apellido = :apellido, dni = :dni, email = :email, telefono = :telefono, observaciones = :observaciones WHERE id = :id');
+        $stmt = $this->db->prepare('UPDATE invitados SET colaborador_id = :colaborador_id, ticket_type_id = :ticket_type_id, nombre = :nombre, apellido = :apellido, dni = :dni, email = :email, telefono = :telefono, observaciones = :observaciones WHERE id = :id');
         return $stmt->execute([
             'id' => $id,
+            'colaborador_id' => $data['colaborador_id'] ?? null,
             'ticket_type_id' => $data['ticket_type_id'],
             'nombre' => $data['nombre'],
             'apellido' => $data['apellido'],

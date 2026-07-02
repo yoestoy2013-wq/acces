@@ -3,18 +3,21 @@
 require_once __DIR__ . '/../models/Invitado.php';
 require_once __DIR__ . '/../models/Evento.php';
 require_once __DIR__ . '/../models/TicketType.php';
+require_once __DIR__ . '/../models/Colaborador.php';
 
 class InvitadoController
 {
     private Evento $eventoModel;
     private TicketType $ticketTypeModel;
     private Invitado $invitadoModel;
+    private Colaborador $colaboradorModel;
 
     public function __construct()
     {
         $this->eventoModel = new Evento();
         $this->ticketTypeModel = new TicketType();
         $this->invitadoModel = new Invitado();
+        $this->colaboradorModel = new Colaborador();
     }
 
     public function listByEvento(int $eventoId): array
@@ -30,6 +33,11 @@ class InvitadoController
     public function listTicketTypes(int $eventoId): array
     {
         return $this->ticketTypeModel->allByEvento($eventoId);
+    }
+
+    public function listColaboradores(): array
+    {
+        return $this->colaboradorModel->activos();
     }
 
     public function create(int $eventoId, array $data): int
@@ -62,6 +70,10 @@ class InvitadoController
 
         if (!isset($data['ticket_type_id']) || !is_numeric($data['ticket_type_id']) || (int)$data['ticket_type_id'] <= 0) {
             $errors[] = 'Debe seleccionar un tipo de ticket válido.';
+        }
+
+        if (!isset($data['colaborador_id']) || !is_numeric($data['colaborador_id']) || (int)$data['colaborador_id'] <= 0) {
+            $errors[] = 'Debe seleccionar un colaborador válido.';
         }
 
         if (isset($data['telefono']) && mb_strlen($data['telefono']) > 50) {

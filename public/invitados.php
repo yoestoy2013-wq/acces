@@ -10,6 +10,8 @@ $errors = [];
 $success = '';
 $invitado = null;
 $ticketTypes = [];
+$colaboradores = [];
+$colaboradorMap = [];
 
 if (!$evento) {
     $errors[] = 'Evento no encontrado. Vuelve a la lista de eventos.';
@@ -21,6 +23,12 @@ if ($evento) {
     foreach ($ticketTypes as $type) {
         $ticketTypeMap[$type['id']] = $type['nombre'];
     }
+    
+    $colaboradores = $invitadoController->listColaboradores();
+    $colaboradorMap = [];
+    foreach ($colaboradores as $col) {
+        $colaboradorMap[$col['id']] = $col['nombre'];
+    }
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $evento) {
@@ -31,8 +39,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $evento) {
     
     $formData = [
         'ticket_type_id' => isset($_POST['ticket_type_id']) ? (int)$_POST['ticket_type_id'] : 0,
+        'colaborador_id' => isset($_POST['colaborador_id']) ? (int)$_POST['colaborador_id'] : 0,
         'nombre' => trim($_POST['nombre'] ?? ''),
-        'apellido' => $isEdit ? ($existingInvitado['apellido'] ?? '') : '',
+        'apellido' => trim($_POST['apellido'] ?? ''),
         'dni' => $isEdit ? ($existingInvitado['dni'] ?? '') : '',
         'email' => $isEdit ? ($existingInvitado['email'] ?? '') : '',
         'telefono' => trim($_POST['telefono'] ?? ''),
@@ -96,6 +105,8 @@ $invitados = $evento ? $invitadoController->listByEvento($eventoId) : [];
 <input type='hidden' name='id' value='<?=htmlspecialchars($invitado['id'] ?? '')?>'>
 <label style='display:block;margin:8px 0'>Nombre (obligatorio)</label>
 <input name='nombre' placeholder='Nombre' value='<?=htmlspecialchars($invitado['nombre'] ?? '')?>' required style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box'>
+<label style='display:block;margin:8px 0'>Apellido (obligatorio)</label>
+<input name='apellido' placeholder='Apellido' value='<?=htmlspecialchars($invitado['apellido'] ?? '')?>' required style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box'>
 <label style='display:block;margin:8px 0'>Tipo de ticket (obligatorio)</label>
 <select name='ticket_type_id' required style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box'>
 <?php if (!$ticketTypes): ?>
@@ -107,6 +118,17 @@ $invitados = $evento ? $invitadoController->listByEvento($eventoId) : [];
 <?php endforeach; ?>
 <?php endif; ?>
 </select>
+<label style='display:block;margin:8px 0'>Colaborador (obligatorio)</label>
+<select name='colaborador_id' required style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box'>
+<?php if (!$colaboradores): ?>
+<option value=''>No hay colaboradores disponibles</option>
+<?php else: ?>
+<option value=''>Selecciona un colaborador</option>
+<?php foreach ($colaboradores as $col): ?>
+<option value='<?=htmlspecialchars($col['id'])?>' <?=isset($invitado['colaborador_id']) && $invitado['colaborador_id'] == $col['id'] ? 'selected' : ''?>><?=htmlspecialchars($col['nombre'])?></option>
+<?php endforeach; ?>
+<?php endif; ?>
+</select>
 <label style='display:block;margin:8px 0'>Teléfono (opcional)</label>
 <input name='telefono' placeholder='Teléfono' value='<?=htmlspecialchars($invitado['telefono'] ?? '')?>' style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box'>
 <label style='display:block;margin:8px 0'>Observaciones (opcional)</label>
@@ -114,15 +136,17 @@ $invitados = $evento ? $invitadoController->listByEvento($eventoId) : [];
 <button type='submit' style='padding:12px 24px;margin-top:12px'><?=isset($invitado['id']) ? 'Actualizar' : 'Crear'?></button>
 </form>
 <table border='1' cellpadding='8' style='width:100%'>
-<tr><th>ID</th><th>Código</th><th>Nombre</th><th>Ticket</th><th>Teléfono</th><th>QR</th><th>Acciones</th></tr>
+<tr><th>ID</th><th>Código</th><th>Nombre</th><th>Apellido</th><th>Ticket</th><th>Colaborador</th><th>Teléfono</th><th>QR</th><th>Acciones</th></tr>
 <?php if (!$invitados): ?>
-<tr><td colspan='7'>No hay invitados cargados.</td></tr>
+<tr><td colspan='9'>No hay invitados cargados.</td></tr>
 <?php else: foreach ($invitados as $guest): ?>
 <tr>
 <td><?=htmlspecialchars($guest['id'])?></td>
 <td style='font-family:monospace;font-size:12px'><?=htmlspecialchars($guest['unique_id'] ?? 'N/A')?></td>
 <td><?=htmlspecialchars($guest['nombre'])?></td>
+<td><?=htmlspecialchars($guest['apellido'] ?? '-')?></td>
 <td><?=htmlspecialchars($ticketTypeMap[$guest['ticket_type_id']] ?? $guest['ticket_type_id'])?></td>
+<td><?=htmlspecialchars($colaboradorMap[$guest['colaborador_id']] ?? '-')?></td>
 <td><?=htmlspecialchars($guest['telefono'])?></td>
 <td style='text-align:center'><?php if (!empty($guest['unique_id'])): ?><a href='qr.php?id=<?=$guest['id']?>' target='_blank' title='Ver QR'><img src='qr.php?id=<?=$guest['id']?>' alt='QR' style='width:80px;height:80px;border:1px solid #ccc'></a><?php else: ?><span style='color:#999'>Sin QR</span><?php endif; ?></td>
 <td><div class='actions'>

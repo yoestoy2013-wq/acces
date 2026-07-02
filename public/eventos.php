@@ -19,6 +19,7 @@ $ev = $eventoModel->all($q);
 <input type="text" name="q" form="busca" value="<?php echo htmlspecialchars($q);?>" placeholder="Buscar evento...">
 <button form="busca" type="submit">Buscar</button>
 <a href="nuevo_evento.php"><button type="button">+ Nuevo</button></a>
+<a href="colaboradores.php" style="margin-left:20px"><button type="button">👥 Colaboradores</button></a>
 </div>
 <form id="busca" method="get"></form>
 <table border="1" cellpadding="8" style="width:100%">
