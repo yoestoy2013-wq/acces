@@ -36,23 +36,53 @@ class Evento
 
     public function create(array $data): int
     {
-        $stmt = $this->db->prepare('INSERT INTO eventos (nombre, fecha, lugar) VALUES (:nombre, :fecha, :lugar)');
+        // Campos opcionales para la versión comercial (preparación para módulo de administración)
+        // estado: ENUM('ACTIVO','SUSPENDIDO','FINALIZADO') - será gestionado por el módulo de administración
+        // organizador: VARCHAR(150) - nombre de la organización/persona responsable
+        // fecha_vencimiento: DATE - fecha límite para operaciones del evento
+        $estado = $data['estado'] ?? 'ACTIVO';
+        $organizador = $data['organizador'] ?? null;
+        $fecha_vencimiento = $data['fecha_vencimiento'] ?? null;
+
+        $stmt = $this->db->prepare(
+            'INSERT INTO eventos (nombre, fecha, lugar, estado, organizador, fecha_vencimiento) 
+             VALUES (:nombre, :fecha, :lugar, :estado, :organizador, :fecha_vencimiento)'
+        );
         $stmt->execute([
             'nombre' => $data['nombre'],
             'fecha' => $data['fecha'],
             'lugar' => $data['lugar'],
+            'estado' => $estado,
+            'organizador' => $organizador,
+            'fecha_vencimiento' => $fecha_vencimiento,
         ]);
         return (int)$this->db->lastInsertId();
     }
 
     public function update(int $id, array $data): bool
     {
-        $stmt = $this->db->prepare('UPDATE eventos SET nombre = :nombre, fecha = :fecha, lugar = :lugar WHERE id = :id');
+        // Campos opcionales para la versión comercial (preparación para módulo de administración)
+        // estado: ENUM('ACTIVO','SUSPENDIDO','FINALIZADO') - será gestionado por el módulo de administración
+        // organizador: VARCHAR(150) - nombre de la organización/persona responsable
+        // fecha_vencimiento: DATE - fecha límite para operaciones del evento
+        $estado = $data['estado'] ?? 'ACTIVO';
+        $organizador = $data['organizador'] ?? null;
+        $fecha_vencimiento = $data['fecha_vencimiento'] ?? null;
+
+        $stmt = $this->db->prepare(
+            'UPDATE eventos 
+             SET nombre = :nombre, fecha = :fecha, lugar = :lugar, estado = :estado, 
+                 organizador = :organizador, fecha_vencimiento = :fecha_vencimiento 
+             WHERE id = :id'
+        );
         return $stmt->execute([
             'id' => $id,
             'nombre' => $data['nombre'],
             'fecha' => $data['fecha'],
             'lugar' => $data['lugar'],
+            'estado' => $estado,
+            'organizador' => $organizador,
+            'fecha_vencimiento' => $fecha_vencimiento,
         ]);
     }
 

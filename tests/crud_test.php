@@ -29,6 +29,7 @@ function createTestDatabase(PDO $pdo): void
     $pdo->exec('CREATE DATABASE access_test CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
     $pdo->exec('USE access_test');
 
+    // Apply migration 001: initial schema
     $schema = file_get_contents(__DIR__ . '/../database/migrations/001_create_schema.sql');
     $schema = str_replace(
         [
@@ -45,6 +46,18 @@ function createTestDatabase(PDO $pdo): void
     $statements = array_filter(array_map('trim', explode(';', $schema)));
     foreach ($statements as $statement) {
         if ($statement === '') {
+            continue;
+        }
+        $pdo->exec($statement);
+    }
+
+    // Apply migration 006: add commercial fields to eventos
+    $migration006 = file_get_contents(__DIR__ . '/../database/migrations/006_add_comercial_fields_to_eventos.sql');
+    $migration006 = str_replace('USE access;', 'USE access_test;', $migration006);
+    
+    $statements = array_filter(array_map('trim', explode(';', $migration006)));
+    foreach ($statements as $statement) {
+        if ($statement === '' || strpos($statement, '--') === 0) {
             continue;
         }
         $pdo->exec($statement);
