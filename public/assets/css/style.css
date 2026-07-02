@@ -463,7 +463,27 @@ table tr:hover {
     color: #ff7a00;
 }
 
-/* Acciones del evento */
+/* Contenedor de acciones del evento */
+.actions-container {
+    max-width: 420px;
+    width: 100%;
+    margin: 24px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.actions-container h2 {
+    font-size: 18px;
+    margin: 20px 0 16px 0;
+    text-align: center;
+    width: 100%;
+    color: #fff;
+}
+
+/* Acciones del evento - legacy support */
 .event-actions {
     margin: 24px 0;
     display: flex;
@@ -498,6 +518,19 @@ table tr:hover {
     justify-content: center;
     gap: 12px;
     transition: all 150ms ease;
+}
+
+.actions-container .action-button {
+    width: 350px !important;
+    height: 50px !important;
+    margin: 6px 0 !important;
+}
+
+.actions-container a {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
 }
 
 .action-button:hover {
