@@ -134,9 +134,9 @@ $invitados = $evento ? $invitadoController->listByEvento($eventoId) : [];
 <button type='submit' style='padding:12px 24px;margin-top:12px'><?=isset($invitado['id']) ? 'Actualizar' : 'Crear'?></button>
 </form>
 <table border='1' cellpadding='8' style='width:100%'>
-<tr><th>ID</th><th>Código</th><th>Nombre</th><th>Ticket</th><th>Colaborador</th><th>Teléfono</th><th>QR</th><th>Acciones</th></tr>
+<tr><th>ID</th><th>Código</th><th>Nombre</th><th>Ticket</th><th>Colaborador</th><th>Teléfono</th><th>Acciones</th></tr>
 <?php if (!$invitados): ?>
-<tr><td colspan='8'>No hay invitados cargados.</td></tr>
+<tr><td colspan='7'>No hay invitados cargados.</td></tr>
 <?php else: foreach ($invitados as $guest): ?>
 <tr>
 <td><?=htmlspecialchars($guest['id'])?></td>
@@ -145,8 +145,8 @@ $invitados = $evento ? $invitadoController->listByEvento($eventoId) : [];
 <td><?=htmlspecialchars($ticketTypeMap[$guest['ticket_type_id']] ?? $guest['ticket_type_id'])?></td>
 <td><?=htmlspecialchars($colaboradorMap[$guest['colaborador_id']] ?? '-')?></td>
 <td><?=htmlspecialchars($guest['telefono'])?></td>
-<td style='text-align:center'><?php if (!empty($guest['unique_id'])): ?><a href='qr.php?id=<?=$guest['id']?>' target='_blank' title='Ver QR'><img src='qr.php?id=<?=$guest['id']?>' alt='QR' style='width:80px;height:80px;border:1px solid #ccc'></a><?php else: ?><span style='color:#999'>Sin QR</span><?php endif; ?></td>
 <td><div class='actions'>
+<a href='entrada_digital.php?id=<?=$guest['id']?>' target='_blank' title='Ver Entrada'><button>👁 Ver Entrada</button></a>
 <a href='invitados.php?evento=<?=$eventoId?>&edit=<?=$guest['id']?>'><button>✏️</button></a>
 <a href='invitados.php?evento=<?=$eventoId?>&delete=<?=$guest['id']?>' onclick="return confirm('¿Eliminar invitado?')"><button>🗑️</button></a>
 </div></td>
