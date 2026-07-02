@@ -46,8 +46,6 @@ if (isset($_GET['delete'])) {
         <p class="event-meta"><?=$evento['fecha']?> · <?=htmlspecialchars($evento['lugar'])?></p>
 
         <div class="actions-container">
-            <h2>Gestión del Evento</h2>
-            
             <a href='invitados.php?evento=<?=$id?>'><button class="action-button"><i class="fas fa-users"></i> Invitados</button></a>
             <a href='tickets.php?evento=<?=$id?>'><button class="action-button"><i class="fas fa-ticket"></i> Tipos de Ticket</button></a>
             <a href='colaboradores.php?evento=<?=$id?>'><button class="action-button"><i class="fas fa-briefcase"></i> Colaboradores</button></a>
