@@ -50,7 +50,44 @@ body {
     margin: 0;
 }
 
+/* Contenedor de título - página inicio */
+.title-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 30px;
+}
+
+.title-container h1 {
+    margin: 0;
+}
+
+.title-container p {
+    margin: 0;
+}
+
 /* Contenedor de botones principales (página inicio) */
+.buttons-container {
+    max-width: 420px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.buttons-container button {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 16px !important;
+}
+
+/* Contenedor de botones principales (página inicio) - legacy support */
 .main-buttons {
     display: flex;
     flex-direction: column;

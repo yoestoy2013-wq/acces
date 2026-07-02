@@ -8,9 +8,11 @@
 </head>
 <body>
     <div class='app'>
-        <h1>ACCESS</h1>
-        <p>Control Inteligente de Eventos</p>
-        <div class='main-buttons'>
+        <div class='title-container'>
+            <h1>ACCESS</h1>
+            <p>Control Inteligente de Eventos</p>
+        </div>
+        <div class='buttons-container'>
             <button onclick="location.href='eventos.php'">EVENTOS</button>
             <button disabled>ESTADÍSTICAS</button>
             <button disabled>SISTEMA</button>
