@@ -24,12 +24,10 @@ $ev = $eventoModel->all();
                 <i class="fas fa-home"></i>
             </button>
         </h1>
-        
-        <div class="toolbar-simple">
-            <a href="nuevo_evento.php"><button class="new-event-btn"><i class="fas fa-plus"></i> Nuevo Evento</button></a>
-        </div>
 
         <div class="events-container">
+            <a href="nuevo_evento.php" class="new-event-link"><button class="new-event-btn"><i class="fas fa-plus"></i> Nuevo Evento</button></a>
+            
             <?php if(!$ev){ ?>
                 <p style="text-align: center; margin-top: 32px;">No hay eventos cargados.</p>
             <?php } else {
