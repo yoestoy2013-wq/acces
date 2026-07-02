@@ -37,7 +37,11 @@ if ($q !== '' || $evento) {
 }
 ?>
 <!doctype html><html><head><meta charset='utf-8'><title>Check-in</title>
-<link rel='stylesheet' href='assets/css/style.css'></head><body><div class='app' style='max-width:900px;text-align:left'>
+<link rel='stylesheet' href='assets/css/style.css'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></head><body><div class='app' style='max-width:900px;text-align:left'>
+<button class="back-button" onclick="history.back();" title="Volver">
+    <i class="fas fa-chevron-left"></i>
+</button>
 <h1>CHECK-IN</h1>
 <?php if ($evento): ?>
 <p>Evento: <?=htmlspecialchars($evento['nombre'])?></p>
@@ -91,5 +95,4 @@ if ($q !== '' || $evento) {
 <?php elseif ($q !== '' || $evento): ?>
 <p>No se encontraron invitados para esa búsqueda.</p>
 <?php endif; ?>
-<p><a href='eventos.php'>Volver</a></p>
 </div></body></html>

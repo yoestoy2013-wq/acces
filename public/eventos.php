@@ -11,9 +11,14 @@ $ev = $eventoModel->all();
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <title>Eventos</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="app">
+        <button class="back-button" onclick="history.back();" title="Volver">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        
         <h1>EVENTOS</h1>
         
         <div class="toolbar-simple">
@@ -30,8 +35,6 @@ $ev = $eventoModel->all();
                     </a>
                 <?php }} ?>
         </div>
-
-        <p style="margin-top: 32px;"><a href="index.php">← Volver</a></p>
     </div>
 </body>
 </html>

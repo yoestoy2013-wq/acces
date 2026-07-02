@@ -53,6 +53,7 @@ if ($checkin && $checkin['estado_ingreso'] === 'ingresó') {
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <title>Entrada Digital</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -177,6 +178,9 @@ if ($checkin && $checkin['estado_ingreso'] === 'ingresó') {
     </style>
 </head>
 <body>
+    <button class="back-button" onclick="history.back();" title="Volver" style="position: fixed; top: 16px; left: 12px; width: 44px; height: 44px; border-radius: 50%; background: rgba(0,0,0,0.5); border: none; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; z-index: 1000;">
+        <i class="fas fa-chevron-left"></i>
+    </button>
     <div class='entrada-container'>
         <?php if ($error): ?>
             <div class='error'><?=htmlspecialchars($error)?></div>

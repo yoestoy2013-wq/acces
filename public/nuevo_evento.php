@@ -29,10 +29,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <link rel='stylesheet' href='assets/css/style.css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <title><?php echo isset($edit) ? 'Editar Evento' : 'Nuevo Evento'; ?></title>
 </head>
 <body>
     <div class='app'>
+        <button class="back-button" onclick="history.back();" title="Volver">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        
         <h1><?php echo isset($edit) ? 'EDITAR EVENTO' : 'NUEVO EVENTO'; ?></h1>
         <form method='post'>
             <input type='hidden' name='id' value='<?php echo $edit['id']??'';?>'>
@@ -48,7 +53,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             <button type='submit'>GUARDAR</button>
         </form>
-        <button onclick="history.back()">← VOLVER</button>
     </div>
 </body>
 </html>

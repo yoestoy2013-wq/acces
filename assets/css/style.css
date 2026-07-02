@@ -27,6 +27,7 @@ body {
     margin: 0 auto;
     padding: 20px;
     text-align: center;
+    position: relative;
 }
 
 /* Títulos */
@@ -208,7 +209,54 @@ table tr:hover {
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
 }
 
-/* Detalles del evento */
+/* Botón de navegación atrás */
+.back-button {
+    position: absolute;
+    top: 16px;
+    left: 12px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.back-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.back-button:active {
+    transform: scale(0.92);
+}
+
+/* Encabezado del evento */
+.event-header {
+    margin-top: 50px;
+    margin-bottom: 24px;
+}
+
+.event-header h1 {
+    font-size: 28px;
+    margin: 0 0 8px 0;
+    color: #ff7a00;
+}
+
+.event-meta {
+    font-size: 14px;
+    color: #bbb;
+    margin: 0;
+    font-weight: 400;
+}
+
+/* Detalles del evento (deprecado, usado en otras pantallas) */
 .event-details {
     background: #2a2a2a;
     padding: 20px;
@@ -229,25 +277,76 @@ table tr:hover {
 /* Acciones del evento */
 .event-actions {
     margin: 24px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .event-actions h2 {
-    font-size: 20px;
+    font-size: 18px;
     margin: 20px 0 16px 0;
-}
-
-.event-actions button {
+    align-self: flex-start;
     width: 100%;
-    margin: 8px 0;
+    text-align: left;
+    padding-left: 20px;
 }
 
-/* Botón de eliminar (rojo) */
-button[style*="background: #cc3333"] {
+/* Botones de acción */
+.action-button {
+    width: 77%;
+    height: 52px;
+    padding: 0;
+    margin: 5px 0;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 12px;
+    background: #2a2a2a;
+    color: #fff;
+    border: 1px solid #444;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    transition: all 150ms ease;
+}
+
+.action-button:hover {
+    background: #333;
+    border-color: #555;
+}
+
+.action-button:active {
+    transform: scale(0.98);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.action-button:disabled {
+    background: #1f1f1f;
+    color: #666;
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.action-button i {
+    font-size: 18px;
+}
+
+/* Botón de eliminar */
+.delete-button {
     background: #cc3333 !important;
+    border-color: #aa2222 !important;
+    color: #fff;
+    margin-top: 10px;
 }
 
-button[style*="background: #cc3333"]:hover {
-    background: #aa2222 !important;
+.delete-button:hover {
+    background: #bb2222 !important;
+}
+
+.delete-button:active {
+    transform: scale(0.98);
+}
 }
 
 /* Formularios */
