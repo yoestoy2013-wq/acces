@@ -143,27 +143,29 @@ $invitados = $evento ? $invitadoController->listByEvento($eventoId) : [];
 <label style='display:block;margin:8px 0'>Teléfono (opcional)</label>
 <input name='telefono' placeholder='Teléfono' value='<?=htmlspecialchars($invitado['telefono'] ?? '')?>' style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box'>
 <label style='display:block;margin:8px 0'>Observaciones (opcional)</label>
-<textarea name='observaciones' placeholder='Observaciones' style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box;height:80px'><?=htmlspecialchars($invitado['observaciones'] ?? '')?></textarea>
-<button type='submit' style='width:100%;padding:12px 24px;margin-top:12px;background:#FF6A00;color:#fff;border:none;border-radius:4px;cursor:pointer;font-weight:bold'><?=isset($invitado['id']) ? 'Actualizar' : 'Crear'?></button>
+<textarea name='observaciones' placeholder='Observaciones' style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box;height:32px;resize:none'><?=htmlspecialchars($invitado['observaciones'] ?? '')?></textarea>
+<button type='submit' style='width:100%;padding:12px 24px;margin-top:4px;background:#FF6A00;color:#fff;border:none;border-radius:4px;cursor:pointer;font-weight:bold'><?=isset($invitado['id']) ? 'Actualizar' : 'Crear'?></button>
 </form>
 </div>
 
-<div class='invitados-container' style='max-width:420px;margin:24px auto;display:flex;flex-direction:column;align-items:center'>
-<table border='1' cellpadding='8' style='width:100%;max-width:350px'>
-<tr><th>Nombre</th><th>Ticket</th><th>Acciones</th></tr>
+<div class='invitados-container' style='max-width:420px;margin:6px auto;display:flex;flex-direction:column;align-items:center'>
+<div style='width:100%;max-width:350px;display:flex;flex-direction:column;gap:3px'>
 <?php if (!$invitados): ?>
-<tr><td colspan='3' style='text-align:center;padding:16px'>No hay invitados cargados.</td></tr>
+<div style='text-align:center;padding:16px'>No hay invitados cargados.</div>
 <?php else: foreach ($invitados as $guest): ?>
-<tr>
-<td><?=htmlspecialchars($guest['nombre'])?></td>
-<td><?=htmlspecialchars($ticketTypeMap[$guest['ticket_type_id']] ?? $guest['ticket_type_id'])?></td>
-<td style='text-align:center'>
-<a href='invitados.php?evento=<?=$eventoId?>&edit=<?=$guest['id']?>' style='margin-right:8px'><button style='background:none;border:none;cursor:pointer;font-size:16px'>✏️</button></a>
+<div style='display:flex;justify-content:space-between;align-items:center;padding:8px;border:1px solid #555;background:#2a2a2a;border-radius:4px;gap:8px'>
+<div style='flex:1'>
+<div style='font-weight:bold'><?=htmlspecialchars($guest['nombre'])?></div>
+<div style='font-size:12px;color:#bbb'><?=htmlspecialchars($ticketTypeMap[$guest['ticket_type_id']] ?? $guest['ticket_type_id'])?></div>
+</div>
+<div style='display:flex;gap:6px;white-space:nowrap'>
+<a href='invitados.php?evento=<?=$eventoId?>&edit=<?=$guest['id']?>'><button style='background:none;border:none;cursor:pointer;font-size:16px'>✏️</button></a>
 <a href='entrada_digital.php?id=<?=$guest['id']?>' target='_blank'><button style='background:none;border:none;cursor:pointer;font-size:16px'>👁</button></a>
-</td>
-</tr>
+<a href='invitados.php?evento=<?=$eventoId?>&delete=<?=$guest['id']?>' onclick="return confirm('¿Eliminar invitado?')"><button style='background:none;border:none;cursor:pointer;font-size:16px'>🗑️</button></a>
+</div>
+</div>
 <?php endforeach; endif; ?>
-</table>
+</div>
 </div>
 <?php endif; ?>
 </div></body></html>
