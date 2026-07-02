@@ -20,16 +20,13 @@ $ev = $eventoModel->all();
             <a href="nuevo_evento.php"><button>+ Nuevo Evento</button></a>
         </div>
 
-        <div class="events-grid">
+        <div class="events-container">
             <?php if(!$ev){ ?>
-                <p style="text-align: center; grid-column: 1 / -1;">No hay eventos cargados.</p>
+                <p style="text-align: center; margin-top: 32px;">No hay eventos cargados.</p>
             <?php } else {
                 foreach($ev as $e){ ?>
-                    <a href="evento_detalle.php?id=<?=$e['id']?>" class="event-card">
-                        <div class="event-card-content">
-                            <h3><?=htmlspecialchars($e['nombre'])?></h3>
-                            <p class="event-lugar">📍 <?=htmlspecialchars($e['lugar'])?></p>
-                        </div>
+                    <a href="evento_detalle.php?id=<?=$e['id']?>" class="event-button">
+                        <?=htmlspecialchars($e['nombre'])?>
                     </a>
                 <?php }} ?>
         </div>
