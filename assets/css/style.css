@@ -41,7 +41,7 @@ body {
     align-items: center;
     justify-content: space-between;
     gap: 8px;
-    margin-bottom: 20px;
+    margin-bottom: 8px;
 }
 
 .header-container h1 {
@@ -431,18 +431,13 @@ table tr:hover {
 }
 
 .event-meta {
-    font-size: 14px;
+    font-size: 16px;
     color: #bbb;
-    margin: 8px 0 24px 0;
+    margin: 0 0 24px 0;
     font-weight: 400;
     text-align: center;
-}
-
-.event-meta {
-    font-size: 14px;
-    color: #bbb;
-    margin: 0;
-    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 /* Detalles del evento (deprecado, usado en otras pantallas) */
@@ -472,15 +467,18 @@ table tr:hover {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 12px;
+    gap: 6px;
 }
 
 .actions-container h2 {
-    font-size: 18px;
-    margin: 20px 0 16px 0;
+    font-size: 16px;
+    margin: 16px 0 8px 0;
     text-align: center;
     width: 100%;
-    color: #fff;
+    color: #FF6A00;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
 }
 
 /* Acciones del evento - legacy support */
