@@ -147,25 +147,23 @@ $invitados = $evento ? $invitadoController->listByEvento($eventoId) : [];
 <button type='submit' style='width:100%;padding:12px 24px;margin-top:12px;background:#FF6A00;color:#fff;border:none;border-radius:4px;cursor:pointer;font-weight:bold'><?=isset($invitado['id']) ? 'Actualizar' : 'Crear'?></button>
 </form>
 </div>
-<table border='1' cellpadding='8' style='width:100%'>
-<tr><th>ID</th><th>Código</th><th>Nombre</th><th>Ticket</th><th>Colaborador</th><th>Teléfono</th><th>Acciones</th></tr>
+
+<div class='invitados-container' style='max-width:420px;margin:24px auto;display:flex;flex-direction:column;align-items:center'>
+<table border='1' cellpadding='8' style='width:100%;max-width:350px'>
+<tr><th>Nombre</th><th>Ticket</th><th>Acciones</th></tr>
 <?php if (!$invitados): ?>
-<tr><td colspan='7'>No hay invitados cargados.</td></tr>
+<tr><td colspan='3' style='text-align:center;padding:16px'>No hay invitados cargados.</td></tr>
 <?php else: foreach ($invitados as $guest): ?>
 <tr>
-<td><?=htmlspecialchars($guest['id'])?></td>
-<td style='font-family:monospace;font-size:12px'><?=htmlspecialchars($guest['unique_id'] ?? 'N/A')?></td>
 <td><?=htmlspecialchars($guest['nombre'])?></td>
 <td><?=htmlspecialchars($ticketTypeMap[$guest['ticket_type_id']] ?? $guest['ticket_type_id'])?></td>
-<td><?=htmlspecialchars($colaboradorMap[$guest['colaborador_id']] ?? '-')?></td>
-<td><?=htmlspecialchars($guest['telefono'])?></td>
-<td><div class='actions'>
-<a href='entrada_digital.php?id=<?=$guest['id']?>' target='_blank' title='Ver Entrada'><button>👁 Ver Entrada</button></a>
-<a href='invitados.php?evento=<?=$eventoId?>&edit=<?=$guest['id']?>'><button>✏️</button></a>
-<a href='invitados.php?evento=<?=$eventoId?>&delete=<?=$guest['id']?>' onclick="return confirm('¿Eliminar invitado?')"><button>🗑️</button></a>
-</div></td>
+<td style='text-align:center'>
+<a href='invitados.php?evento=<?=$eventoId?>&edit=<?=$guest['id']?>' style='margin-right:8px'><button style='background:none;border:none;cursor:pointer;font-size:16px'>✏️</button></a>
+<a href='entrada_digital.php?id=<?=$guest['id']?>' target='_blank'><button style='background:none;border:none;cursor:pointer;font-size:16px'>👁</button></a>
+</td>
 </tr>
 <?php endforeach; endif; ?>
 </table>
+</div>
 <?php endif; ?>
 </div></body></html>
