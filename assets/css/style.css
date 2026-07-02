@@ -28,6 +28,16 @@ body {
     padding: 20px;
     text-align: center;
     position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header: flecha + título */
+.app > h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
 }
 
 /* Contenedor de botones principales (página inicio) */
@@ -128,14 +138,16 @@ button:disabled {
     gap: 10px;
     margin: 24px 0;
     justify-content: center;
+    align-items: center;
+    width: 100%;
 }
 
 .toolbar-simple button {
-    display: inline-block;
-    width: auto;
-    padding: 12px 24px;
-    font-size: 16px;
-    margin: 0;
+    display: inline-block !important;
+    width: auto !important;
+    padding: 12px 24px !important;
+    font-size: 16px !important;
+    margin: 0 auto !important;
 }
 
 /* Botón Nuevo Evento */
@@ -271,11 +283,14 @@ table tr:hover {
 
 /* Botón de navegación atrás */
 .back-button {
-    position: absolute;
-    top: 16px;
-    left: 12px;
+    position: relative;
+    top: auto;
+    left: auto;
     width: 40px;
     height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    flex-shrink: 0;
     border-radius: 50%;
     background: #1E1E1E;
     border: 1.5px solid #555555;
@@ -287,6 +302,8 @@ table tr:hover {
     font-size: 18px;
     transition: all 0.2s ease;
     z-index: 1000;
+    order: -1;
+    margin-right: 8px;
 }
 
 .back-button:hover {
@@ -302,6 +319,18 @@ table tr:hover {
 .event-header {
     margin-top: 50px;
     margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+
+.event-header .back-button {
+    position: relative;
+    top: auto;
+    left: auto;
+    order: -1;
+    margin-right: 0;
 }
 
 .event-header h1 {

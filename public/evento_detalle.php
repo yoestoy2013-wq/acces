@@ -34,11 +34,10 @@ if (isset($_GET['delete'])) {
 </head>
 <body>
     <div class="app">
-        <button class="back-button" onclick="history.back();" title="Volver">
-            <i class="fas fa-chevron-left"></i>
-        </button>
-
         <div class="event-header">
+            <button class="back-button" onclick="history.back();" title="Volver">
+                <i class="fas fa-chevron-left"></i>
+            </button>
             <h1><?=htmlspecialchars($evento['nombre'])?></h1>
             <p class="event-meta"><?=$evento['fecha']?> · <?=htmlspecialchars($evento['lugar'])?></p>
         </div>
