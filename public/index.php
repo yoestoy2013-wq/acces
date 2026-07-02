@@ -10,9 +10,11 @@
     <div class='app'>
         <h1>ACCESS</h1>
         <p>Control Inteligente de Eventos</p>
-        <button onclick="location.href='eventos.php'">EVENTOS</button>
-        <button disabled>ESTADÍSTICAS</button>
-        <button disabled>SISTEMA</button>
+        <div class='main-buttons'>
+            <button onclick="location.href='eventos.php'">EVENTOS</button>
+            <button disabled>ESTADÍSTICAS</button>
+            <button disabled>SISTEMA</button>
+        </div>
     </div>
     <script src='/assets/js/app.js'></script>
 </body>
