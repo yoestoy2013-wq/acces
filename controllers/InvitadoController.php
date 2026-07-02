@@ -65,15 +65,11 @@ class InvitadoController
         $errors = [];
 
         if (!isset($data['nombre']) || trim($data['nombre']) === '') {
-            $errors[] = 'El nombre no puede quedar vacío.';
+            $errors[] = 'El nombre y apellido no puede quedar vacío.';
         }
 
         if (!isset($data['ticket_type_id']) || !is_numeric($data['ticket_type_id']) || (int)$data['ticket_type_id'] <= 0) {
             $errors[] = 'Debe seleccionar un tipo de ticket válido.';
-        }
-
-        if (!isset($data['colaborador_id']) || !is_numeric($data['colaborador_id']) || (int)$data['colaborador_id'] <= 0) {
-            $errors[] = 'Debe seleccionar un colaborador válido.';
         }
 
         if (isset($data['telefono']) && mb_strlen($data['telefono']) > 50) {

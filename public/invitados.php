@@ -39,9 +39,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $evento) {
     
     $formData = [
         'ticket_type_id' => isset($_POST['ticket_type_id']) ? (int)$_POST['ticket_type_id'] : 0,
-        'colaborador_id' => isset($_POST['colaborador_id']) ? (int)$_POST['colaborador_id'] : 0,
+        'colaborador_id' => isset($_POST['colaborador_id']) && $_POST['colaborador_id'] !== '' ? (int)$_POST['colaborador_id'] : null,
         'nombre' => trim($_POST['nombre'] ?? ''),
-        'apellido' => trim($_POST['apellido'] ?? ''),
+        'apellido' => '',
         'dni' => $isEdit ? ($existingInvitado['dni'] ?? '') : '',
         'email' => $isEdit ? ($existingInvitado['email'] ?? '') : '',
         'telefono' => trim($_POST['telefono'] ?? ''),
@@ -103,10 +103,8 @@ $invitados = $evento ? $invitadoController->listByEvento($eventoId) : [];
 <?php if ($evento): ?>
 <form method='post' style='margin-bottom:24px'>
 <input type='hidden' name='id' value='<?=htmlspecialchars($invitado['id'] ?? '')?>'>
-<label style='display:block;margin:8px 0'>Nombre (obligatorio)</label>
-<input name='nombre' placeholder='Nombre' value='<?=htmlspecialchars($invitado['nombre'] ?? '')?>' required style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box'>
-<label style='display:block;margin:8px 0'>Apellido (obligatorio)</label>
-<input name='apellido' placeholder='Apellido' value='<?=htmlspecialchars($invitado['apellido'] ?? '')?>' required style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box'>
+<label style='display:block;margin:8px 0'>Nombre y apellido (obligatorio)</label>
+<input name='nombre' placeholder='Nombre y apellido' value='<?=htmlspecialchars($invitado['nombre'] ?? '')?>' required style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box'>
 <label style='display:block;margin:8px 0'>Tipo de ticket (obligatorio)</label>
 <select name='ticket_type_id' required style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box'>
 <?php if (!$ticketTypes): ?>
@@ -118,12 +116,12 @@ $invitados = $evento ? $invitadoController->listByEvento($eventoId) : [];
 <?php endforeach; ?>
 <?php endif; ?>
 </select>
-<label style='display:block;margin:8px 0'>Colaborador (obligatorio)</label>
-<select name='colaborador_id' required style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box'>
+<label style='display:block;margin:8px 0'>Colaborador (opcional)</label>
+<select name='colaborador_id' style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box'>
 <?php if (!$colaboradores): ?>
 <option value=''>No hay colaboradores disponibles</option>
 <?php else: ?>
-<option value=''>Selecciona un colaborador</option>
+<option value=''>-- Sin colaborador --</option>
 <?php foreach ($colaboradores as $col): ?>
 <option value='<?=htmlspecialchars($col['id'])?>' <?=isset($invitado['colaborador_id']) && $invitado['colaborador_id'] == $col['id'] ? 'selected' : ''?>><?=htmlspecialchars($col['nombre'])?></option>
 <?php endforeach; ?>
@@ -136,15 +134,14 @@ $invitados = $evento ? $invitadoController->listByEvento($eventoId) : [];
 <button type='submit' style='padding:12px 24px;margin-top:12px'><?=isset($invitado['id']) ? 'Actualizar' : 'Crear'?></button>
 </form>
 <table border='1' cellpadding='8' style='width:100%'>
-<tr><th>ID</th><th>Código</th><th>Nombre</th><th>Apellido</th><th>Ticket</th><th>Colaborador</th><th>Teléfono</th><th>QR</th><th>Acciones</th></tr>
+<tr><th>ID</th><th>Código</th><th>Nombre</th><th>Ticket</th><th>Colaborador</th><th>Teléfono</th><th>QR</th><th>Acciones</th></tr>
 <?php if (!$invitados): ?>
-<tr><td colspan='9'>No hay invitados cargados.</td></tr>
+<tr><td colspan='8'>No hay invitados cargados.</td></tr>
 <?php else: foreach ($invitados as $guest): ?>
 <tr>
 <td><?=htmlspecialchars($guest['id'])?></td>
 <td style='font-family:monospace;font-size:12px'><?=htmlspecialchars($guest['unique_id'] ?? 'N/A')?></td>
 <td><?=htmlspecialchars($guest['nombre'])?></td>
-<td><?=htmlspecialchars($guest['apellido'] ?? '-')?></td>
 <td><?=htmlspecialchars($ticketTypeMap[$guest['ticket_type_id']] ?? $guest['ticket_type_id'])?></td>
 <td><?=htmlspecialchars($colaboradorMap[$guest['colaborador_id']] ?? '-')?></td>
 <td><?=htmlspecialchars($guest['telefono'])?></td>
