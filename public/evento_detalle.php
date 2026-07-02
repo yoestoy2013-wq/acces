@@ -39,8 +39,11 @@ if (isset($_GET['delete'])) {
                 <i class="fas fa-chevron-left"></i>
             </button>
             <h1><?=htmlspecialchars($evento['nombre'])?></h1>
-            <p class="event-meta"><?=$evento['fecha']?> · <?=htmlspecialchars($evento['lugar'])?></p>
+            <button class="home-button" onclick="location.href='index.php';" title="Inicio">
+                <i class="fas fa-home"></i>
+            </button>
         </div>
+        <p class="event-meta"><?=$evento['fecha']?> · <?=htmlspecialchars($evento['lugar'])?></p>
 
         <div class="event-actions">
             <h2>Gestión del Evento</h2>

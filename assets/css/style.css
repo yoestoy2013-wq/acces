@@ -32,12 +32,13 @@ body {
     flex-direction: column;
 }
 
-/* Header: flecha + título */
+/* Header: flecha + título + home */
 .app > h1 {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     gap: 16px;
+    width: 100%;
 }
 
 /* Contenedor de botones principales (página inicio) */
@@ -142,12 +143,20 @@ button:disabled {
     width: 100%;
 }
 
+.toolbar-simple a {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    max-width: 350px !important;
+}
+
 .toolbar-simple button {
-    display: inline-block !important;
-    width: auto !important;
+    display: flex !important;
+    width: 350px !important;
     padding: 12px 24px !important;
     font-size: 16px !important;
-    margin: 0 auto !important;
+    margin: 0 !important;
 }
 
 /* Botón Nuevo Evento */
@@ -303,7 +312,32 @@ table tr:hover {
     transition: all 0.2s ease;
     z-index: 1000;
     order: -1;
-    margin-right: 8px;
+    margin-right: 0;
+}
+
+/* Botón home */
+.home-button {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #1E1E1E;
+    border: 1.5px solid #555555;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    transition: all 0.2s ease;
+    z-index: 1000;
+    order: 1;
+    margin-left: 0;
 }
 
 .back-button:hover {
@@ -318,11 +352,12 @@ table tr:hover {
 /* Encabezado del evento */
 .event-header {
     margin-top: 50px;
-    margin-bottom: 24px;
+    margin-bottom: 8px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     gap: 16px;
+    width: 100%;
 }
 
 .event-header .back-button {
@@ -333,10 +368,28 @@ table tr:hover {
     margin-right: 0;
 }
 
+.event-header .home-button {
+    position: relative;
+    top: auto;
+    left: auto;
+    order: 1;
+    margin-left: 0;
+}
+
 .event-header h1 {
     font-size: 28px;
-    margin: 0 0 8px 0;
+    margin: 0;
     color: #ff7a00;
+    flex: 1;
+    text-align: center;
+}
+
+.event-meta {
+    font-size: 14px;
+    color: #bbb;
+    margin: 8px 0 24px 0;
+    font-weight: 400;
+    text-align: center;
 }
 
 .event-meta {

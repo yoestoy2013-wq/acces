@@ -20,6 +20,9 @@ $ev = $eventoModel->all();
                 <i class="fas fa-chevron-left"></i>
             </button>
             EVENTOS
+            <button class="home-button" onclick="location.href='index.php';" title="Inicio">
+                <i class="fas fa-home"></i>
+            </button>
         </h1>
         
         <div class="toolbar-simple">
