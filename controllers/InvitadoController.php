@@ -64,18 +64,6 @@ class InvitadoController
             $errors[] = 'Debe seleccionar un tipo de ticket válido.';
         }
 
-        if (!empty($data['email']) && !filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-            $errors[] = 'El email no es válido.';
-        }
-
-        if (isset($data['apellido']) && mb_strlen($data['apellido']) > 150) {
-            $errors[] = 'El apellido no puede tener más de 150 caracteres.';
-        }
-
-        if (isset($data['dni']) && mb_strlen($data['dni']) > 50) {
-            $errors[] = 'El DNI no puede tener más de 50 caracteres.';
-        }
-
         if (isset($data['telefono']) && mb_strlen($data['telefono']) > 50) {
             $errors[] = 'El teléfono no puede tener más de 50 caracteres.';
         }

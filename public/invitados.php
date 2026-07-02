@@ -24,12 +24,17 @@ if ($evento) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $evento) {
+    $isEdit = isset($_POST['id']) && $_POST['id'] !== '';
+    if ($isEdit) {
+        $existingInvitado = $invitadoController->find((int)$_POST['id']);
+    }
+    
     $formData = [
         'ticket_type_id' => isset($_POST['ticket_type_id']) ? (int)$_POST['ticket_type_id'] : 0,
         'nombre' => trim($_POST['nombre'] ?? ''),
-        'apellido' => trim($_POST['apellido'] ?? ''),
-        'dni' => trim($_POST['dni'] ?? ''),
-        'email' => trim($_POST['email'] ?? ''),
+        'apellido' => $isEdit ? ($existingInvitado['apellido'] ?? '') : '',
+        'dni' => $isEdit ? ($existingInvitado['dni'] ?? '') : '',
+        'email' => $isEdit ? ($existingInvitado['email'] ?? '') : '',
         'telefono' => trim($_POST['telefono'] ?? ''),
         'observaciones' => trim($_POST['observaciones'] ?? ''),
     ];
@@ -89,8 +94,10 @@ $invitados = $evento ? $invitadoController->listByEvento($eventoId) : [];
 <?php if ($evento): ?>
 <form method='post' style='margin-bottom:24px'>
 <input type='hidden' name='id' value='<?=htmlspecialchars($invitado['id'] ?? '')?>'>
-<label style='display:block;margin:8px 0'>Tipo de ticket</label>
-<select name='ticket_type_id' required style='width:100%;padding:12px;margin:8px 0'>
+<label style='display:block;margin:8px 0'>Nombre (obligatorio)</label>
+<input name='nombre' placeholder='Nombre' value='<?=htmlspecialchars($invitado['nombre'] ?? '')?>' required style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box'>
+<label style='display:block;margin:8px 0'>Tipo de ticket (obligatorio)</label>
+<select name='ticket_type_id' required style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box'>
 <?php if (!$ticketTypes): ?>
 <option value=''>No hay tipos de ticket disponibles</option>
 <?php else: ?>
@@ -100,25 +107,21 @@ $invitados = $evento ? $invitadoController->listByEvento($eventoId) : [];
 <?php endforeach; ?>
 <?php endif; ?>
 </select>
-<input name='nombre' placeholder='Nombre' value='<?=htmlspecialchars($invitado['nombre'] ?? '')?>' required style='width:100%;padding:12px;margin:8px 0'>
-<input name='apellido' placeholder='Apellido' value='<?=htmlspecialchars($invitado['apellido'] ?? '')?>' style='width:100%;padding:12px;margin:8px 0'>
-<input name='dni' placeholder='DNI' value='<?=htmlspecialchars($invitado['dni'] ?? '')?>' style='width:100%;padding:12px;margin:8px 0'>
-<input name='email' type='email' placeholder='Email' value='<?=htmlspecialchars($invitado['email'] ?? '')?>' style='width:100%;padding:12px;margin:8px 0'>
-<input name='telefono' placeholder='Teléfono' value='<?=htmlspecialchars($invitado['telefono'] ?? '')?>' style='width:100%;padding:12px;margin:8px 0'>
-<textarea name='observaciones' placeholder='Observaciones' style='width:100%;padding:12px;margin:8px 0'><?=htmlspecialchars($invitado['observaciones'] ?? '')?></textarea>
-<button type='submit'><?=isset($invitado['id']) ? 'Actualizar' : 'Crear'?></button>
+<label style='display:block;margin:8px 0'>Teléfono (opcional)</label>
+<input name='telefono' placeholder='Teléfono' value='<?=htmlspecialchars($invitado['telefono'] ?? '')?>' style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box'>
+<label style='display:block;margin:8px 0'>Observaciones (opcional)</label>
+<textarea name='observaciones' placeholder='Observaciones' style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box'><?=htmlspecialchars($invitado['observaciones'] ?? '')?></textarea>
+<button type='submit' style='padding:12px 24px;margin-top:12px'><?=isset($invitado['id']) ? 'Actualizar' : 'Crear'?></button>
 </form>
 <table border='1' cellpadding='8' style='width:100%'>
-<tr><th>ID</th><th>Nombre</th><th>Apellido</th><th>Ticket</th><th>Email</th><th>Teléfono</th><th>Acciones</th></tr>
+<tr><th>ID</th><th>Nombre</th><th>Ticket</th><th>Teléfono</th><th>Acciones</th></tr>
 <?php if (!$invitados): ?>
-<tr><td colspan='7'>No hay invitados cargados.</td></tr>
+<tr><td colspan='5'>No hay invitados cargados.</td></tr>
 <?php else: foreach ($invitados as $guest): ?>
 <tr>
 <td><?=htmlspecialchars($guest['id'])?></td>
 <td><?=htmlspecialchars($guest['nombre'])?></td>
-<td><?=htmlspecialchars($guest['apellido'])?></td>
 <td><?=htmlspecialchars($ticketTypeMap[$guest['ticket_type_id']] ?? $guest['ticket_type_id'])?></td>
-<td><?=htmlspecialchars($guest['email'])?></td>
 <td><?=htmlspecialchars($guest['telefono'])?></td>
 <td><div class='actions'>
 <a href='invitados.php?evento=<?=$eventoId?>&edit=<?=$guest['id']?>'><button>✏️</button></a>
