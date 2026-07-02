@@ -34,7 +34,7 @@ if (isset($_GET['delete'])) {
 </head>
 <body>
     <div class="app">
-        <div class="event-header">
+        <div class="header-container">
             <button class="back-button" onclick="history.back();" title="Volver">
                 <i class="fas fa-chevron-left"></i>
             </button>

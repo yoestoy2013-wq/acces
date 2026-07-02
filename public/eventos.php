@@ -15,15 +15,15 @@ $ev = $eventoModel->all();
 </head>
 <body>
     <div class="app">
-        <h1>
+        <div class="header-container">
             <button class="back-button" onclick="history.back();" title="Volver">
                 <i class="fas fa-chevron-left"></i>
             </button>
-            EVENTOS
+            <h1>EVENTOS</h1>
             <button class="home-button" onclick="location.href='index.php';" title="Inicio">
                 <i class="fas fa-home"></i>
             </button>
-        </h1>
+        </div>
 
         <div class="events-container">
             <a href="nuevo_evento.php" class="new-event-link"><button class="new-event-btn"><i class="fas fa-plus"></i> Nuevo Evento</button></a>

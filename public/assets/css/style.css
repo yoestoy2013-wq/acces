@@ -32,13 +32,22 @@ body {
     flex-direction: column;
 }
 
-/* Header: flecha + título + home */
-.app > h1 {
+/* Header container: botón back + título + botón home */
+.header-container {
+    max-width: 420px;
+    width: 100%;
+    margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 16px;
-    width: 100%;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.header-container h1 {
+    flex: 1;
+    text-align: center;
+    margin: 0;
 }
 
 /* Contenedor de botones principales (página inicio) */
@@ -359,18 +368,8 @@ table tr:hover {
     transform: scale(0.95);
 }
 
-/* Encabezado del evento */
-.event-header {
-    margin-top: 50px;
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    width: 100%;
-}
-
-.event-header .back-button {
+/* Encabezado del evento - usa la misma clase header-container */
+.header-container .back-button {
     position: relative;
     top: auto;
     left: auto;
@@ -378,7 +377,7 @@ table tr:hover {
     margin-right: 0;
 }
 
-.event-header .home-button {
+.header-container .home-button {
     position: relative;
     top: auto;
     left: auto;
@@ -386,7 +385,7 @@ table tr:hover {
     margin-left: 0;
 }
 
-.event-header h1 {
+.header-container h1 {
     font-size: 28px;
     margin: 0;
     color: #ff7a00;
