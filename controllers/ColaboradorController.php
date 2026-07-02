@@ -34,8 +34,9 @@ class ColaboradorController
         return $errors;
     }
 
-    public function create(array $data): int
+    public function create(int $eventoId, array $data): int
     {
+        $data['evento_id'] = $eventoId;
         $id = $this->model->create($data);
         if ($id <= 0) {
             throw new RuntimeException('No se pudo crear el colaborador.');
@@ -61,14 +62,14 @@ class ColaboradorController
         return $this->model->find($id);
     }
 
-    public function list(): array
+    public function list(int $eventoId): array
     {
-        return $this->model->all();
+        return $this->model->all($eventoId);
     }
 
-    public function listActivos(): array
+    public function listActivos(int $eventoId): array
     {
-        return $this->model->activos();
+        return $this->model->activos($eventoId);
     }
 
     public function countInvitados(int $id): int

@@ -35,9 +35,9 @@ class InvitadoController
         return $this->ticketTypeModel->allByEvento($eventoId);
     }
 
-    public function listColaboradores(): array
+    public function listColaboradores(int $eventoId): array
     {
-        return $this->colaboradorModel->activos();
+        return $this->colaboradorModel->activos($eventoId);
     }
 
     public function create(int $eventoId, array $data): int

@@ -24,7 +24,7 @@ if ($evento) {
         $ticketTypeMap[$type['id']] = $type['nombre'];
     }
     
-    $colaboradores = $invitadoController->listColaboradores();
+    $colaboradores = $invitadoController->listColaboradores($eventoId);
     $colaboradorMap = [];
     foreach ($colaboradores as $col) {
         $colaboradorMap[$col['id']] = $col['nombre'];

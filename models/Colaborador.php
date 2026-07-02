@@ -19,24 +19,25 @@ class Colaborador
         return $colaborador ?: null;
     }
 
-    public function all(): array
+    public function all(int $eventoId): array
     {
-        $stmt = $this->db->prepare('SELECT * FROM colaboradores ORDER BY nombre ASC');
-        $stmt->execute();
+        $stmt = $this->db->prepare('SELECT * FROM colaboradores WHERE evento_id = :evento_id ORDER BY nombre ASC');
+        $stmt->execute(['evento_id' => $eventoId]);
         return $stmt->fetchAll();
     }
 
-    public function activos(): array
+    public function activos(int $eventoId): array
     {
-        $stmt = $this->db->prepare('SELECT * FROM colaboradores WHERE activo = 1 ORDER BY nombre ASC');
-        $stmt->execute();
+        $stmt = $this->db->prepare('SELECT * FROM colaboradores WHERE evento_id = :evento_id AND activo = 1 ORDER BY nombre ASC');
+        $stmt->execute(['evento_id' => $eventoId]);
         return $stmt->fetchAll();
     }
 
     public function create(array $data): int
     {
-        $stmt = $this->db->prepare('INSERT INTO colaboradores (nombre, telefono, observaciones, activo) VALUES (:nombre, :telefono, :observaciones, :activo)');
+        $stmt = $this->db->prepare('INSERT INTO colaboradores (evento_id, nombre, telefono, observaciones, activo) VALUES (:evento_id, :nombre, :telefono, :observaciones, :activo)');
         $stmt->execute([
+            'evento_id' => $data['evento_id'],
             'nombre' => $data['nombre'],
             'telefono' => $data['telefono'] ?? null,
             'observaciones' => $data['observaciones'] ?? null,
