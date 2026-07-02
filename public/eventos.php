@@ -22,7 +22,7 @@ $ev = $eventoModel->all();
         <h1>EVENTOS</h1>
         
         <div class="toolbar-simple">
-            <a href="nuevo_evento.php"><button>+ Nuevo Evento</button></a>
+            <a href="nuevo_evento.php"><button class="new-event-btn"><i class="fas fa-plus"></i> Nuevo Evento</button></a>
         </div>
 
         <div class="events-container">
@@ -31,6 +31,7 @@ $ev = $eventoModel->all();
             <?php } else {
                 foreach($ev as $e){ ?>
                     <a href="evento_detalle.php?id=<?=$e['id']?>" class="event-button">
+                        <i class="fas fa-calendar"></i>
                         <?=htmlspecialchars($e['nombre'])?>
                     </a>
                 <?php }} ?>
