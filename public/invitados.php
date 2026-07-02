@@ -88,14 +88,21 @@ if ($evento && isset($_GET['edit'])) {
 $invitados = $evento ? $invitadoController->listByEvento($eventoId) : [];
 ?>
 <!doctype html><html><head><meta charset='utf-8'><title>Invitados</title>
-<link rel='stylesheet' href='assets/css/style.css'>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></head><body><div class='app' style='max-width:900px;text-align:left'>
-<button class="back-button" onclick="history.back();" title="Volver">
-    <i class="fas fa-chevron-left"></i>
-</button>
-<h1>INVITADOS</h1>
+<link rel='stylesheet' href='assets/css/style.css?v=<?= filemtime(__DIR__ . '/../assets/css/style.css') ?>'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></head><body><div class='app'>
+
+<div class="header-container">
+    <button class="back-button" onclick="history.back();" title="Volver">
+        <i class="fas fa-chevron-left"></i>
+    </button>
+    <h1>INVITADOS</h1>
+    <button class="home-button" onclick="location.href='index.php';" title="Inicio">
+        <i class="fas fa-home"></i>
+    </button>
+</div>
+
 <?php if ($evento): ?>
-<p>Evento: <?=htmlspecialchars($evento['nombre'])?></p>
+<p class="event-meta"><?=htmlspecialchars($evento['nombre'])?></p>
 <?php endif; ?>
 <?php if ($errors): ?>
 <div class='errors' style='background:#ffe6e6;padding:12px;margin:12px 0;border:1px solid #ffb3b3;'>
@@ -104,8 +111,10 @@ $invitados = $evento ? $invitadoController->listByEvento($eventoId) : [];
 <?php endforeach; ?>
 </div>
 <?php endif; ?>
+
 <?php if ($evento): ?>
-<form method='post' style='margin-bottom:24px'>
+<div class='form-container' style='max-width:420px;margin:24px auto;display:flex;flex-direction:column;align-items:center'>
+<form method='post' style='width:100%;max-width:350px'>
 <input type='hidden' name='id' value='<?=htmlspecialchars($invitado['id'] ?? '')?>'>
 <label style='display:block;margin:8px 0'>Nombre y apellido (obligatorio)</label>
 <input name='nombre' placeholder='Nombre y apellido' value='<?=htmlspecialchars($invitado['nombre'] ?? '')?>' required style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box'>
@@ -134,9 +143,10 @@ $invitados = $evento ? $invitadoController->listByEvento($eventoId) : [];
 <label style='display:block;margin:8px 0'>Teléfono (opcional)</label>
 <input name='telefono' placeholder='Teléfono' value='<?=htmlspecialchars($invitado['telefono'] ?? '')?>' style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box'>
 <label style='display:block;margin:8px 0'>Observaciones (opcional)</label>
-<textarea name='observaciones' placeholder='Observaciones' style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box'><?=htmlspecialchars($invitado['observaciones'] ?? '')?></textarea>
-<button type='submit' style='padding:12px 24px;margin-top:12px'><?=isset($invitado['id']) ? 'Actualizar' : 'Crear'?></button>
+<textarea name='observaciones' placeholder='Observaciones' style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box;height:80px'><?=htmlspecialchars($invitado['observaciones'] ?? '')?></textarea>
+<button type='submit' style='width:100%;padding:12px 24px;margin-top:12px;background:#FF6A00;color:#fff;border:none;border-radius:4px;cursor:pointer;font-weight:bold'><?=isset($invitado['id']) ? 'Actualizar' : 'Crear'?></button>
 </form>
+</div>
 <table border='1' cellpadding='8' style='width:100%'>
 <tr><th>ID</th><th>Código</th><th>Nombre</th><th>Ticket</th><th>Colaborador</th><th>Teléfono</th><th>Acciones</th></tr>
 <?php if (!$invitados): ?>
