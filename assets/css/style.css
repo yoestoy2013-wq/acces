@@ -1,7 +1,503 @@
-body{margin:0;background:#1e1e1e;color:#fff;font-family:Arial}.app{max-width:420px;margin:40px auto;text-align:center}h1{color:#ff7a00;font-size:44px}button{display:block;width:100%;margin:16px 0;padding:20px;font-size:22px;background:#ff7a00;color:#fff;border:0;border-radius:12px}
+/* ACCESS v0.9 - Responsive Design */
 
-.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:12px 0}
-.toolbar input{flex:1;min-width:180px;padding:12px;border-radius:8px}
-.toolbar button{display:inline-block;width:auto;min-width:120px;padding:12px 18px;font-size:16px;margin:0}
-.actions{display:flex;gap:6px}
-.actions button{width:auto;display:inline-block;padding:8px 10px;font-size:14px;margin:0}
+/* Reset y estilos base */
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    background: #1e1e1e;
+    color: #fff;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* Contenedor principal */
+.app {
+    max-width: 100%;
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Títulos */
+h1 {
+    color: #ff7a00;
+    font-size: 36px;
+    margin: 20px 0 10px 0;
+    word-wrap: break-word;
+}
+
+h1, h2, h3 {
+    text-align: center;
+}
+
+p {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+/* Botones */
+button, .button {
+    display: block;
+    width: 100%;
+    margin: 12px 0;
+    padding: 16px;
+    font-size: 18px;
+    background: #ff7a00;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.3s ease;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+button:hover, .button:hover {
+    background: #e66c00;
+}
+
+button:disabled {
+    background: #666;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Barra de herramientas */
+.toolbar {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 20px 0;
+    width: 100%;
+}
+
+.toolbar input {
+    flex: 1;
+    min-width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    background: #2a2a2a;
+    color: #fff;
+    font-size: 16px;
+}
+
+.toolbar button {
+    display: inline-block;
+    width: auto;
+    min-width: 100px;
+    padding: 12px 16px;
+    font-size: 16px;
+    margin: 0;
+    flex-shrink: 0;
+}
+
+/* Grupo de acciones */
+.actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.actions button {
+    width: auto;
+    display: inline-block;
+    padding: 10px 12px;
+    font-size: 18px;
+    margin: 0;
+    min-width: auto;
+    flex: 1;
+    min-width: 45px;
+}
+
+/* Tablas responsivas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 14px;
+}
+
+table thead {
+    background: #2a2a2a;
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #444;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+table th {
+    background: #2a2a2a;
+    color: #ff7a00;
+    font-weight: 600;
+}
+
+table tr:nth-child(even) {
+    background: #252525;
+}
+
+table tr:hover {
+    background: #2d2d2d;
+}
+
+/* Formularios */
+input, textarea, select {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #444;
+    border-radius: 6px;
+    background: #2a2a2a;
+    color: #fff;
+    font-family: inherit;
+    font-size: 16px;
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: #ff7a00;
+    background: #333;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+label {
+    display: block;
+    margin: 12px 0 6px 0;
+    font-weight: 500;
+}
+
+/* Enlaces */
+a {
+    color: #ff7a00;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a button {
+    text-decoration: none;
+}
+
+/* Párrafos de navegación */
+p a {
+    display: inline-block;
+}
+
+/* Espaciado de campos de formulario */
+.form-group {
+    margin: 16px 0;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    margin: 0;
+}
+
+/* Checkbox y radio */
+input[type="checkbox"],
+input[type="radio"] {
+    width: auto;
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+/* ======================
+   RESPONSIVE - TABLETAS (768px)
+   ====================== */
+
+@media (min-width: 768px) {
+    .app {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        text-align: left;
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 44px;
+    }
+
+    .toolbar {
+        gap: 12px;
+        flex-wrap: nowrap;
+    }
+
+    .toolbar input {
+        flex: 1;
+        min-width: auto;
+    }
+
+    .toolbar button {
+        min-width: 120px;
+    }
+
+    button {
+        display: inline-block;
+        width: auto;
+        min-width: 140px;
+        padding: 12px 24px;
+        margin: 0 8px 0 0;
+    }
+
+    table {
+        font-size: 15px;
+    }
+
+    table th, table td {
+        padding: 14px;
+    }
+
+    input, textarea, select {
+        max-width: 400px;
+    }
+}
+
+/* ======================
+   RESPONSIVE - DESKTOP (1024px)
+   ====================== */
+
+@media (min-width: 1024px) {
+    .app {
+        max-width: 1200px;
+        padding: 40px;
+    }
+
+    table {
+        font-size: 16px;
+    }
+
+    table th, table td {
+        padding: 16px;
+    }
+}
+
+/* ======================
+   MOBILE - Pantallas pequeñas (< 768px)
+   ====================== */
+
+@media (max-width: 767px) {
+    body {
+        font-size: 15px;
+    }
+
+    .app {
+        padding: 12px;
+        max-width: 100%;
+    }
+
+    h1 {
+        font-size: 28px;
+        margin: 16px 0 8px 0;
+    }
+
+    p {
+        font-size: 14px;
+    }
+
+    button, .button {
+        font-size: 16px;
+        padding: 14px 12px;
+        margin: 10px 0;
+        width: 100%;
+    }
+
+    .toolbar {
+        gap: 8px;
+        flex-direction: column;
+    }
+
+    .toolbar input {
+        width: 100%;
+        min-width: unset;
+        padding: 12px;
+        font-size: 16px;
+    }
+
+    .toolbar button {
+        width: 100%;
+        min-width: unset;
+        padding: 12px;
+    }
+
+    .actions {
+        flex-direction: row;
+        justify-content: flex-start;
+        gap: 6px;
+    }
+
+    .actions button {
+        flex: 1;
+        min-width: 44px;
+        padding: 8px 6px;
+        font-size: 16px;
+    }
+
+    /* Tablas responsivas en móvil */
+    table {
+        display: block;
+        overflow-x: visible;
+        margin: 16px 0;
+    }
+
+    table thead {
+        display: none;
+    }
+
+    table, table tbody, table tr, table td {
+        display: block;
+        width: 100%;
+    }
+
+    table tr {
+        display: block;
+        margin-bottom: 16px;
+        border: 1px solid #444;
+        border-radius: 8px;
+        overflow: hidden;
+        background: #252525;
+    }
+
+    table td {
+        display: grid;
+        grid-template-columns: 100px 1fr;
+        gap: 12px;
+        padding: 12px;
+        border: none;
+        border-bottom: 1px solid #444;
+    }
+
+    table td:last-child {
+        border-bottom: none;
+    }
+
+    /* Celda de acciones especial */
+    table td:nth-child(5),
+    table td[data-label="Acciones"] {
+        display: flex;
+        flex-direction: column;
+        grid-template-columns: unset;
+        gap: 0;
+        padding: 12px;
+    }
+
+    table td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: #ff7a00;
+        word-break: break-word;
+    }
+
+    /* No mostrar ::before para celdas sin data-label o especiales */
+    table td:nth-child(5)::before {
+        content: "Acciones";
+        display: block;
+        margin-bottom: 12px;
+    }
+
+    input, textarea, select {
+        width: 100%;
+        max-width: none;
+        font-size: 16px;
+        padding: 12px;
+    }
+
+    input[type="checkbox"],
+    input[type="radio"] {
+        width: auto;
+    }
+
+    label {
+        font-size: 16px;
+        margin: 16px 0 8px 0;
+    }
+
+    /* Espaciado mejorado en móvil */
+    .form-group {
+        margin: 20px 0;
+    }
+
+    a button {
+        width: 100%;
+        margin: 8px 0;
+    }
+
+    /* Flexbox para acciones en móvil */
+    a {
+        display: inline;
+    }
+}
+
+/* ======================
+   UTILITY CLASSES
+   ====================== */
+
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.mt-large {
+    margin-top: 24px;
+}
+
+.mb-large {
+    margin-bottom: 24px;
+}
+
+.hidden-mobile {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .hidden-mobile {
+        display: block;
+    }
+}
+
+.hidden-desktop {
+    display: block;
+}
+
+@media (min-width: 768px) {
+    .hidden-desktop {
+        display: none;
+    }
+}
