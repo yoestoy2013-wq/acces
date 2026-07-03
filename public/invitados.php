@@ -112,20 +112,20 @@ $invitados = $evento ? ($filterType && $filterValue ? $invitadoController->filte
 <p class="event-meta"><?=htmlspecialchars($evento['nombre'])?></p>
 
 <!-- Filtro de Invitados -->
-<div style='width:100%;margin:6px 0;padding:0 8px;display:flex;flex-direction:column;align-items:center;box-sizing:border-box'>
+<div style='width:100%;margin:0;padding:0 8px;display:flex;flex-direction:column;align-items:center;box-sizing:border-box'>
 <?php if (!isset($_GET['filter'])): ?>
 <a href='invitados.php?evento=<?=$eventoId?>&filter=1' style='text-decoration:none;width:100%'>
-<button style='width:100%;padding:12px 24px;background:#6A5AFF;color:#fff;border:none;border-radius:4px;cursor:pointer;font-weight:bold;font-size:14px'><i class="fas fa-filter"></i> Filtrar Invitados</button>
+<button style='width:100%;padding:8px 12px;background:#6A5AFF;color:#fff;border:none;border-radius:4px;cursor:pointer;font-weight:bold;font-size:12px'><i class="fas fa-filter"></i> Filtrar Invitados</button>
 </a>
 </div>
 <?php else: ?>
 <!-- Formulario de Filtro -->
-<div style='width:100%;margin:6px 0;padding:0 8px;display:flex;flex-direction:column;align-items:center;box-sizing:border-box'>
+<div style='width:100%;margin:0;padding:0 8px;display:flex;flex-direction:column;align-items:center;box-sizing:border-box'>
 <form method='get' id='filter_form' style='width:100%' onsubmit="return validateFilterForm()">
 <input type='hidden' name='evento' value='<?=$eventoId?>'>
 <input type='hidden' name='filter_value' id='filter_value_hidden' value=''>
-<label style='display:block;margin:8px 0;font-weight:bold'>Filtrar por:</label>
-<select name='filter_type' id='filter_type' onchange="updateFilterUI()" required style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box'>
+<label style='display:block;margin:4px 0;font-weight:bold;font-size:12px'>Filtrar por:</label>
+<select name='filter_type' id='filter_type' onchange="updateFilterUI()" required style='width:100%;padding:8px;margin:4px 0;box-sizing:border-box;font-size:12px'>
 <option value=''>-- Selecciona un tipo de filtro --</option>
 <option value='nombre'>Nombre</option>
 <option value='ticket'>Tipo de Ticket</option>
@@ -136,14 +136,14 @@ $invitados = $evento ? ($filterType && $filterValue ? $invitadoController->filte
 
 <!-- Filtro: Nombre -->
 <div id='filter_nombre' style='display:none;width:100%'>
-<label style='display:block;margin:8px 0'>Buscar por nombre:</label>
-<input type='text' id='nombre_input' placeholder='Ingresa el nombre' style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box'>
+<label style='display:block;margin:4px 0;font-size:12px'>Buscar por nombre:</label>
+<input type='text' id='nombre_input' placeholder='Ingresa el nombre' style='width:100%;padding:8px;margin:4px 0;box-sizing:border-box;font-size:12px'>
 </div>
 
 <!-- Filtro: Ticket -->
 <div id='filter_ticket' style='display:none;width:100%'>
-<label style='display:block;margin:8px 0'>Selecciona tipo de ticket:</label>
-<select id='filter_value_ticket' style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box'>
+<label style='display:block;margin:4px 0;font-size:12px'>Selecciona tipo de ticket:</label>
+<select id='filter_value_ticket' style='width:100%;padding:8px;margin:4px 0;box-sizing:border-box;font-size:12px'>
 <option value=''>-- Selecciona un ticket --</option>
 <?php foreach ($ticketTypes as $type): ?>
 <option value='<?=htmlspecialchars($type['id'])?>'><?=htmlspecialchars($type['nombre'])?> (<?=htmlspecialchars($type['precio'])?>)</option>
@@ -153,8 +153,8 @@ $invitados = $evento ? ($filterType && $filterValue ? $invitadoController->filte
 
 <!-- Filtro: Colaborador -->
 <div id='filter_colaborador' style='display:none;width:100%'>
-<label style='display:block;margin:8px 0'>Selecciona colaborador:</label>
-<select id='filter_value_colaborador' style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box'>
+<label style='display:block;margin:4px 0;font-size:12px'>Selecciona colaborador:</label>
+<select id='filter_value_colaborador' style='width:100%;padding:8px;margin:4px 0;box-sizing:border-box;font-size:12px'>
 <option value=''>-- Selecciona un colaborador --</option>
 <?php foreach ($colaboradores as $col): ?>
 <option value='<?=htmlspecialchars($col['id'])?>'><?=htmlspecialchars($col['nombre'])?></option>
@@ -162,10 +162,10 @@ $invitados = $evento ? ($filterType && $filterValue ? $invitadoController->filte
 </select>
 </div>
 
-<div style='display:flex;gap:6px;width:100%;margin-top:8px'>
-<button type='submit' style='flex:1;padding:12px;background:#6A5AFF;color:#fff;border:none;border-radius:4px;cursor:pointer;font-weight:bold'>Aplicar Filtro</button>
+<div style='display:flex;gap:4px;width:100%;margin-top:4px'>
+<button type='submit' style='flex:1;padding:8px;background:#6A5AFF;color:#fff;border:none;border-radius:4px;cursor:pointer;font-weight:bold;font-size:12px'>Aplicar Filtro</button>
 <a href='invitados.php?evento=<?=$eventoId?>' style='flex:1;text-decoration:none'>
-<button type='button' style='width:100%;padding:12px;background:#999;color:#fff;border:none;border-radius:4px;cursor:pointer;font-weight:bold'>Cancelar</button>
+<button type='button' style='width:100%;padding:8px;background:#999;color:#fff;border:none;border-radius:4px;cursor:pointer;font-weight:bold;font-size:12px'>Cancelar</button>
 </a>
 </div>
 </form>
@@ -184,8 +184,8 @@ $invitados = $evento ? ($filterType && $filterValue ? $invitadoController->filte
 <?php if ($evento): ?>
 
 <!-- Lista de Invitados -->
-<div class='invitados-container' style='width:100%;margin:24px 0;padding:0 8px;display:flex;flex-direction:column;align-items:center;box-sizing:border-box'>
-<div style='width:100%;display:flex;flex-direction:column;gap:2px;max-height:400px;overflow-y:auto'>
+<div class='invitados-container' style='width:100%;margin:0;padding:0 8px;display:flex;flex-direction:column;align-items:center;box-sizing:border-box'>
+<div style='width:100%;display:flex;flex-direction:column;gap:2px;max-height:calc(100vh - 240px);overflow-y:auto'>
 <?php if (!$invitados): ?>
 <div style='text-align:center;padding:16px'>No hay invitados cargados.</div>
 <?php else: foreach ($invitados as $guest): ?>
@@ -304,20 +304,20 @@ function validateFilterForm() {
 <!-- Botón Crear o Formulario -->
 <?php if (!isset($_GET['form']) && !isset($_GET['edit'])): ?>
 <!-- Mostrar botón Crear -->
-<div style='width:100%;margin:6px 0;padding:0 8px;display:flex;flex-direction:column;align-items:center;box-sizing:border-box'>
+<div style='width:100%;margin:0;padding:0 8px;display:flex;flex-direction:column;align-items:center;box-sizing:border-box'>
 <a href='invitados.php?evento=<?=$eventoId?>&form=1' style='text-decoration:none;width:100%'>
-<button style='width:100%;padding:12px 24px;background:#FF6A00;color:#fff;border:none;border-radius:4px;cursor:pointer;font-weight:bold;font-size:16px'><i class="fas fa-plus"></i> Crear Invitado</button>
+<button style='width:100%;padding:8px 12px;background:#FF6A00;color:#fff;border:none;border-radius:4px;cursor:pointer;font-weight:bold;font-size:12px'><i class="fas fa-plus"></i> Crear Invitado</button>
 </a>
 </div>
 <?php else: ?>
 <!-- Mostrar formulario -->
-<div class='form-container' style='width:100%;margin:6px 0;padding:0 8px;display:flex;flex-direction:column;align-items:center;box-sizing:border-box'>
+<div class='form-container' style='width:100%;margin:0;padding:0 8px;display:flex;flex-direction:column;align-items:center;box-sizing:border-box'>
 <form method='post' style='width:100%'>
 <input type='hidden' name='id' value='<?=htmlspecialchars($invitado['id'] ?? '')?>'>
-<label style='display:block;margin:8px 0'>Nombre y apellido (obligatorio)</label>
-<input name='nombre' placeholder='Nombre y apellido' value='<?=htmlspecialchars($invitado['nombre'] ?? '')?>' required style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box'>
-<label style='display:block;margin:8px 0'>Tipo de ticket (obligatorio)</label>
-<select name='ticket_type_id' required style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box'>
+<label style='display:block;margin:4px 0;font-size:11px;font-weight:bold'>Nombre y apellido (obligatorio)</label>
+<input name='nombre' placeholder='Nombre y apellido' value='<?=htmlspecialchars($invitado['nombre'] ?? '')?>' required style='width:100%;padding:8px;margin:2px 0;box-sizing:border-box;font-size:12px'>
+<label style='display:block;margin:4px 0;font-size:11px;font-weight:bold'>Tipo de ticket (obligatorio)</label>
+<select name='ticket_type_id' required style='width:100%;padding:8px;margin:2px 0;box-sizing:border-box;font-size:12px'>
 <?php if (!$ticketTypes): ?>
 <option value=''>No hay tipos de ticket disponibles</option>
 <?php else: ?>
@@ -327,7 +327,7 @@ function validateFilterForm() {
 <?php endforeach; ?>
 <?php endif; ?>
 </select>
-<label style='display:block;margin:8px 0'>Colaborador (opcional)</label>
+<label style='display:block;margin:4px 0;font-size:11px;font-weight:bold'>Colaborador (opcional)</label>
 <select name='colaborador_id' style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box'>
 <?php if (!$colaboradores): ?>
 <option value=''>No hay colaboradores disponibles</option>
@@ -338,11 +338,11 @@ function validateFilterForm() {
 <?php endforeach; ?>
 <?php endif; ?>
 </select>
-<label style='display:block;margin:8px 0'>Teléfono (opcional)</label>
-<input name='telefono' placeholder='Teléfono' value='<?=htmlspecialchars($invitado['telefono'] ?? '')?>' style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box'>
-<label style='display:block;margin:8px 0'>Observaciones (opcional)</label>
-<textarea name='observaciones' placeholder='Observaciones' style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box;height:32px;resize:none'><?=htmlspecialchars($invitado['observaciones'] ?? '')?></textarea>
-<button type='submit' style='width:100%;padding:12px 24px;margin-top:4px;background:#FF6A00;color:#fff;border:none;border-radius:4px;cursor:pointer;font-weight:bold'><?=isset($invitado['id']) ? 'Actualizar' : 'Crear'?></button>
+<label style='display:block;margin:4px 0;font-size:11px;font-weight:bold'>Teléfono (opcional)</label>
+<input name='telefono' placeholder='Teléfono' value='<?=htmlspecialchars($invitado['telefono'] ?? '')?>' style='width:100%;padding:8px;margin:2px 0;box-sizing:border-box;font-size:12px'>
+<label style='display:block;margin:4px 0;font-size:11px;font-weight:bold'>Observaciones (opcional)</label>
+<textarea name='observaciones' placeholder='Observaciones' style='width:100%;padding:8px;margin:2px 0;box-sizing:border-box;height:24px;resize:none;font-size:12px'><?=htmlspecialchars($invitado['observaciones'] ?? '')?></textarea>
+<button type='submit' style='width:100%;padding:8px 12px;margin-top:4px;background:#FF6A00;color:#fff;border:none;border-radius:4px;cursor:pointer;font-weight:bold;font-size:12px'><?=isset($invitado['id']) ? 'Actualizar' : 'Crear'?></button>
 </form>
 </div>
 <?php endif; ?>
