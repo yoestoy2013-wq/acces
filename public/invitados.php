@@ -98,7 +98,8 @@ $invitados = $evento ? ($filterType && $filterValue ? $invitadoController->filte
 <link rel='stylesheet' href='assets/css/style.css?v=<?= filemtime(__DIR__ . '/../assets/css/style.css') ?>'>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></head><body><div class='app'>
 
-<div class="header-container">
+<div style='width:100%;margin:0;padding:0 8px;display:flex;flex-direction:column;align-items:center;box-sizing:border-box'>
+<div class="header-container" style='width:350px;max-width:calc(100% - 16px)'>
     <button class="back-button" onclick="history.back();" title="Volver">
         <i class="fas fa-chevron-left"></i>
     </button>
@@ -106,6 +107,7 @@ $invitados = $evento ? ($filterType && $filterValue ? $invitadoController->filte
     <button class="home-button" onclick="location.href='index.php';" title="Inicio">
         <i class="fas fa-home"></i>
     </button>
+</div>
 </div>
 
 <?php if ($evento): ?>
