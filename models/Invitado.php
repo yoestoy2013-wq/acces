@@ -91,4 +91,55 @@ class Invitado
         $stmt = $this->db->prepare('DELETE FROM invitados WHERE id = :id');
         return $stmt->execute(['id' => $id]);
     }
+
+    public function filterByEvento(int $eventoId, string $filterType, string $filterValue): array
+    {
+        $filterValue = trim($filterValue);
+        
+        switch ($filterType) {
+            case 'nombre':
+                $sql = 'SELECT * FROM invitados WHERE evento_id = :evento_id AND nombre LIKE :filter_value ORDER BY id DESC';
+                $stmt = $this->db->prepare($sql);
+                $stmt->execute([
+                    'evento_id' => $eventoId,
+                    'filter_value' => '%' . $filterValue . '%'
+                ]);
+                break;
+                
+            case 'ticket':
+                $sql = 'SELECT * FROM invitados WHERE evento_id = :evento_id AND ticket_type_id = :filter_value ORDER BY id DESC';
+                $stmt = $this->db->prepare($sql);
+                $stmt->execute([
+                    'evento_id' => $eventoId,
+                    'filter_value' => (int)$filterValue
+                ]);
+                break;
+                
+            case 'pendiente':
+                $sql = 'SELECT DISTINCT i.* FROM invitados i LEFT JOIN checkins c ON i.id = c.invitado_id WHERE i.evento_id = :evento_id AND (c.id IS NULL OR c.estado_ingreso = "pendiente") ORDER BY i.id DESC';
+                $stmt = $this->db->prepare($sql);
+                $stmt->execute(['evento_id' => $eventoId]);
+                break;
+                
+            case 'ingresado':
+                $sql = 'SELECT DISTINCT i.* FROM invitados i INNER JOIN checkins c ON i.id = c.invitado_id WHERE i.evento_id = :evento_id AND c.estado_ingreso != "pendiente" ORDER BY i.id DESC';
+                $stmt = $this->db->prepare($sql);
+                $stmt->execute(['evento_id' => $eventoId]);
+                break;
+                
+            case 'colaborador':
+                $sql = 'SELECT * FROM invitados WHERE evento_id = :evento_id AND colaborador_id = :filter_value ORDER BY id DESC';
+                $stmt = $this->db->prepare($sql);
+                $stmt->execute([
+                    'evento_id' => $eventoId,
+                    'filter_value' => (int)$filterValue
+                ]);
+                break;
+                
+            default:
+                return $this->findByEvento($eventoId);
+        }
+        
+        return $stmt->fetchAll();
+    }
 }

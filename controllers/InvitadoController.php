@@ -82,4 +82,9 @@ class InvitadoController
 
         return $errors;
     }
+
+    public function filterByEvento(int $eventoId, string $filterType, string $filterValue): array
+    {
+        return $this->invitadoModel->filterByEvento($eventoId, $filterType, $filterValue);
+    }
 }

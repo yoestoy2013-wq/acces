@@ -4,6 +4,8 @@ require_once __DIR__ . '/../models/Evento.php';
 
 $eventoId = isset($_GET['evento']) ? (int)$_GET['evento'] : 0;
 $expandId = isset($_GET['expand']) ? (int)$_GET['expand'] : null;
+$filterType = isset($_GET['filter_type']) ? trim($_GET['filter_type']) : null;
+$filterValue = isset($_GET['filter_value']) ? trim($_GET['filter_value']) : null;
 $eventoModel = new Evento();
 $invitadoController = new InvitadoController();
 $evento = $eventoModel->find($eventoId);
@@ -90,7 +92,7 @@ if ($evento && isset($_GET['edit'])) {
     }
 }
 
-$invitados = $evento ? $invitadoController->listByEvento($eventoId) : [];
+$invitados = $evento ? ($filterType && $filterValue ? $invitadoController->filterByEvento($eventoId, $filterType, $filterValue) : $invitadoController->listByEvento($eventoId)) : [];
 ?>
 <!doctype html><html><head><meta charset='utf-8'><title>Invitados</title>
 <link rel='stylesheet' href='assets/css/style.css?v=<?= filemtime(__DIR__ . '/../assets/css/style.css') ?>'>
@@ -108,6 +110,68 @@ $invitados = $evento ? $invitadoController->listByEvento($eventoId) : [];
 
 <?php if ($evento): ?>
 <p class="event-meta"><?=htmlspecialchars($evento['nombre'])?></p>
+
+<!-- Filtro de Invitados -->
+<div style='max-width:420px;margin:6px auto;display:flex;flex-direction:column;align-items:center'>
+<?php if (!isset($_GET['filter'])): ?>
+<a href='invitados.php?evento=<?=$eventoId?>&filter=1' style='text-decoration:none;width:100%'>
+<button style='width:350px;padding:12px 24px;background:#6A5AFF;color:#fff;border:none;border-radius:4px;cursor:pointer;font-weight:bold;font-size:14px'><i class="fas fa-filter"></i> Filtrar Invitados</button>
+</a>
+</div>
+<?php else: ?>
+<!-- Formulario de Filtro -->
+<div style='max-width:420px;margin:6px auto;display:flex;flex-direction:column;align-items:center'>
+<form method='get' id='filter_form' style='width:100%;max-width:350px' onsubmit="return validateFilterForm()">
+<input type='hidden' name='evento' value='<?=$eventoId?>'>
+<input type='hidden' name='filter_value' id='filter_value_hidden' value=''>
+<label style='display:block;margin:8px 0;font-weight:bold'>Filtrar por:</label>
+<select name='filter_type' id='filter_type' onchange="updateFilterUI()" required style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box'>
+<option value=''>-- Selecciona un tipo de filtro --</option>
+<option value='nombre'>Nombre</option>
+<option value='ticket'>Tipo de Ticket</option>
+<option value='pendiente'>Pendiente (sin ingresar)</option>
+<option value='ingresado'>Ingresado</option>
+<option value='colaborador'>Colaborador</option>
+</select>
+
+<!-- Filtro: Nombre -->
+<div id='filter_nombre' style='display:none;width:100%'>
+<label style='display:block;margin:8px 0'>Buscar por nombre:</label>
+<input type='text' id='nombre_input' placeholder='Ingresa el nombre' style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box'>
+</div>
+
+<!-- Filtro: Ticket -->
+<div id='filter_ticket' style='display:none;width:100%'>
+<label style='display:block;margin:8px 0'>Selecciona tipo de ticket:</label>
+<select id='filter_value_ticket' style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box'>
+<option value=''>-- Selecciona un ticket --</option>
+<?php foreach ($ticketTypes as $type): ?>
+<option value='<?=htmlspecialchars($type['id'])?>'><?=htmlspecialchars($type['nombre'])?> (<?=htmlspecialchars($type['precio'])?>)</option>
+<?php endforeach; ?>
+</select>
+</div>
+
+<!-- Filtro: Colaborador -->
+<div id='filter_colaborador' style='display:none;width:100%'>
+<label style='display:block;margin:8px 0'>Selecciona colaborador:</label>
+<select id='filter_value_colaborador' style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box'>
+<option value=''>-- Selecciona un colaborador --</option>
+<?php foreach ($colaboradores as $col): ?>
+<option value='<?=htmlspecialchars($col['id'])?>'><?=htmlspecialchars($col['nombre'])?></option>
+<?php endforeach; ?>
+</select>
+</div>
+
+<div style='display:flex;gap:6px;width:100%;margin-top:8px'>
+<button type='submit' style='flex:1;padding:12px;background:#6A5AFF;color:#fff;border:none;border-radius:4px;cursor:pointer;font-weight:bold'>Aplicar Filtro</button>
+<a href='invitados.php?evento=<?=$eventoId?>' style='flex:1;text-decoration:none'>
+<button type='button' style='width:100%;padding:12px;background:#999;color:#fff;border:none;border-radius:4px;cursor:pointer;font-weight:bold'>Cancelar</button>
+</a>
+</div>
+</form>
+</div>
+<?php endif; ?>
+
 <?php endif; ?>
 <?php if ($errors): ?>
 <div class='errors' style='background:#ffe6e6;padding:12px;margin:12px 0;border:1px solid #ffb3b3;'>
@@ -168,7 +232,72 @@ window.addEventListener('DOMContentLoaded', function() {
       toggleGuest(guestButton);
     }
   }
+  
+  // Initialize filter UI
+  const filterType = document.getElementById('filter_type');
+  if (filterType) {
+    updateFilterUI();
+  }
 });
+
+function updateFilterUI() {
+  const filterType = document.getElementById('filter_type').value;
+  
+  // Hide all filter UIs
+  document.getElementById('filter_nombre').style.display = 'none';
+  document.getElementById('filter_ticket').style.display = 'none';
+  document.getElementById('filter_colaborador').style.display = 'none';
+  
+  // Show selected filter UI or auto-submit
+  if (filterType === 'nombre') {
+    document.getElementById('filter_nombre').style.display = 'block';
+    document.getElementById('nombre_input').focus();
+  } else if (filterType === 'ticket') {
+    document.getElementById('filter_ticket').style.display = 'block';
+  } else if (filterType === 'colaborador') {
+    document.getElementById('filter_colaborador').style.display = 'block';
+  } else if (filterType === 'pendiente' || filterType === 'ingresado') {
+    // Auto-submit for status filters (they don't need filter_value input)
+    document.getElementById('filter_value_hidden').value = filterType;
+    setTimeout(() => document.getElementById('filter_form').submit(), 100);
+  }
+}
+
+function validateFilterForm() {
+  const filterType = document.getElementById('filter_type').value;
+  
+  if (!filterType) {
+    alert('Selecciona un tipo de filtro');
+    return false;
+  }
+  
+  let filterValue = '';
+  
+  if (filterType === 'nombre') {
+    filterValue = document.getElementById('nombre_input').value.trim();
+    if (!filterValue) {
+      alert('Ingresa un nombre para buscar');
+      return false;
+    }
+  } else if (filterType === 'ticket') {
+    filterValue = document.getElementById('filter_value_ticket').value;
+    if (!filterValue) {
+      alert('Selecciona un tipo de ticket');
+      return false;
+    }
+  } else if (filterType === 'colaborador') {
+    filterValue = document.getElementById('filter_value_colaborador').value;
+    if (!filterValue) {
+      alert('Selecciona un colaborador');
+      return false;
+    }
+  } else if (filterType === 'pendiente' || filterType === 'ingresado') {
+    filterValue = filterType;
+  }
+  
+  document.getElementById('filter_value_hidden').value = filterValue;
+  return true;
+}
 </script>
 </div>
 
