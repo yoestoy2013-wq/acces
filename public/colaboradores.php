@@ -92,20 +92,6 @@ $colaboradores = $evento ? $colaboradorController->list($eventoId) : [];
 </div>
 <?php endif; ?>
 <?php if ($evento): ?>
-<form method='post' style='margin-bottom:24px'>
-<input type='hidden' name='id' value='<?=htmlspecialchars($colaborador['id'] ?? '')?>'>
-<label style='display:block;margin:8px 0'>Nombre (obligatorio)</label>
-<input name='nombre' placeholder='Nombre' value='<?=htmlspecialchars($colaborador['nombre'] ?? '')?>' required style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box'>
-<label style='display:block;margin:8px 0'>Teléfono (opcional)</label>
-<input name='telefono' placeholder='Teléfono' value='<?=htmlspecialchars($colaborador['telefono'] ?? '')?>' style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box'>
-<label style='display:block;margin:8px 0'>Observaciones (opcional)</label>
-<textarea name='observaciones' placeholder='Observaciones' style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box'><?=htmlspecialchars($colaborador['observaciones'] ?? '')?></textarea>
-<label style='display:block;margin:8px 0'>
-<input type='checkbox' name='activo' <?=isset($colaborador['activo']) && $colaborador['activo'] ? 'checked' : ''?>>
-Activo
-</label>
-<button type='submit' style='padding:12px 24px;margin-top:12px'><?=isset($colaborador['id']) ? 'Actualizar' : 'Crear'?></button>
-</form>
 
 <!-- Lista de Colaboradores -->
 <div class='actions-container'>
@@ -165,6 +151,39 @@ window.addEventListener('DOMContentLoaded', function() {
   }
 });
 </script>
+
+<!-- Botón Crear o Formulario -->
+<?php if (!isset($_GET['form']) && !isset($_GET['edit'])): ?>
+<!-- Mostrar botón Crear -->
+<div class='actions-container'>
+<a href='colaboradores.php?evento=<?=$eventoId?>&form=1' style='text-decoration:none'>
+<button class='action-button' style='background:#FF6A00;border-color:#FF6A00'><i class="fas fa-plus"></i> Crear Colaborador</button>
+</a>
+</div>
+<?php else: ?>
+<!-- Mostrar formulario -->
+<div class='actions-container'>
+<form method='post' style='width:350px;max-width:100%'>
+<input type='hidden' name='id' value='<?=htmlspecialchars($colaborador['id'] ?? '')?>'>
+<label style='display:block;margin:8px 0'>Nombre (obligatorio)</label>
+<input name='nombre' placeholder='Nombre' value='<?=htmlspecialchars($colaborador['nombre'] ?? '')?>' required style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box'>
+<label style='display:block;margin:8px 0'>Teléfono (opcional)</label>
+<input name='telefono' placeholder='Teléfono' value='<?=htmlspecialchars($colaborador['telefono'] ?? '')?>' style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box'>
+<label style='display:block;margin:8px 0'>Observaciones (opcional)</label>
+<textarea name='observaciones' placeholder='Observaciones' style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box'><?=htmlspecialchars($colaborador['observaciones'] ?? '')?></textarea>
+<label style='display:block;margin:8px 0'>
+<input type='checkbox' name='activo' <?=isset($colaborador['activo']) && $colaborador['activo'] ? 'checked' : ''?>>
+Activo
+</label>
+<div style='display:flex;gap:6px;width:100%;margin-top:12px'>
+<button type='submit' style='flex:1;padding:14px;background:#4caf50;color:#fff;border:1px solid #388e3c;border-radius:12px;cursor:pointer;font-weight:600;font-size:16px'><?=isset($colaborador['id']) ? 'Actualizar' : 'Crear'?></button>
+<a href='colaboradores.php?evento=<?=$eventoId?>' style='flex:1;text-decoration:none'>
+<button type='button' style='width:100%;padding:14px;background:#555;color:#fff;border:1px solid #666;border-radius:12px;cursor:pointer;font-weight:600;font-size:16px'>Cancelar</button>
+</a>
+</div>
+</form>
+</div>
+<?php endif; ?>
 
 <?php endif; ?>
 </div></body></html>
