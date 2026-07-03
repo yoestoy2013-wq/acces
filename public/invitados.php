@@ -219,6 +219,13 @@ function toggleGuest(button) {
     actions.style.display = 'none';
     button.style.background = '#2a2a2a';
     activeGuest = null;
+    // If an edit form is open, close it by removing edit/expand params
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('edit')) {
+      urlParams.delete('edit');
+      urlParams.delete('expand');
+      window.location.search = urlParams.toString();
+    }
   }
 }
 
