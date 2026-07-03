@@ -106,23 +106,65 @@ Activo
 </label>
 <button type='submit' style='padding:12px 24px;margin-top:12px'><?=isset($colaborador['id']) ? 'Actualizar' : 'Crear'?></button>
 </form>
-<table border='1' cellpadding='8' style='width:100%'>
-<tr><th>ID</th><th>Nombre</th><th>Teléfono</th><th>Invitados</th><th>Estado</th><th>Acciones</th></tr>
+
+<!-- Lista de Colaboradores -->
+<div class='actions-container'>
+<div style='width:350px;max-width:100%;display:flex;flex-direction:column;gap:2px'>
 <?php if (!$colaboradores): ?>
-<tr><td colspan='6'>No hay colaboradores cargados.</td></tr>
+<div style='text-align:center;padding:16px'>No hay colaboradores cargados.</div>
 <?php else: foreach ($colaboradores as $col): ?>
-<tr>
-<td><?=htmlspecialchars($col['id'])?></td>
-<td><?=htmlspecialchars($col['nombre'])?></td>
-<td><?=htmlspecialchars($col['telefono'] ?? '-')?></td>
-<td><?=$colaboradorController->countInvitados($col['id'])?></td>
-<td><?=$col['activo'] ? 'Activo' : 'Inactivo'?></td>
-<td><div class='actions'>
-<a href='colaboradores.php?evento=<?=$eventoId?>&edit=<?=$col['id']?>'><button>✏️</button></a>
-<a href='colaboradores.php?evento=<?=$eventoId?>&delete=<?=$col['id']?>' onclick="return confirm('¿Eliminar colaborador?')"<?=$colaboradorController->countInvitados($col['id']) > 0 ? ' style="opacity:0.5;cursor:not-allowed" onclick="alert(\'No se puede eliminar este colaborador porque tiene invitados asociados.\'); return false;"' : ''?>><button><?=$colaboradorController->countInvitados($col['id']) > 0 ? '🚫' : '🗑️'?></button></a>
-</div></td>
-</tr>
+<button onclick="toggleColaborador(this)" data-col-id="<?=$col['id']?>" class='action-button' style='width:100%;justify-content:space-between;padding:0 16px;text-align:left'>
+<span style='font-weight:600;font-size:16px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap'><?=htmlspecialchars($col['nombre'])?></span>
+<span style='background:#FF6A00;color:#1e1e1e;font-size:12px;padding:3px 10px;border-radius:6px;font-weight:bold;white-space:nowrap;margin-left:8px'><?=$colaboradorController->countInvitados($col['id'])?> invitados</span>
+</button>
+<div class='col-actions' style='display:none;gap:4px;flex-direction:column;width:350px;max-width:100%;margin-bottom:4px'>
+<a href='colaboradores.php?evento=<?=$eventoId?>&edit=<?=$col['id']?>&expand=<?=$col['id']?>' style='text-decoration:none'><button class='action-button' style='width:100%'>Editar</button></a>
+<a href='colaborador_detalle.php?evento=<?=$eventoId?>&id=<?=$col['id']?>' style='text-decoration:none'><button class='action-button' style='width:100%'>Ver detalles</button></a>
+<a href='colaboradores.php?evento=<?=$eventoId?>&delete=<?=$col['id']?>&expand=<?=$col['id']?>' onclick="return confirm('¿Eliminar colaborador?')" style='text-decoration:none'><button class='action-button delete-button' style='width:100%'>Eliminar</button></a>
+</div>
 <?php endforeach; endif; ?>
-</table>
+</div>
+</div>
+
+<script>
+let activeCol = null;
+
+function toggleColaborador(button) {
+  const actions = button.nextElementSibling;
+  if (activeCol && activeCol !== button) {
+    activeCol.nextElementSibling.style.display = 'none';
+    activeCol.style.background = '#2a2a2a';
+  }
+  if (actions.style.display === 'none') {
+    actions.style.display = 'flex';
+    button.style.background = '#444';
+    activeCol = button;
+  } else {
+    actions.style.display = 'none';
+    button.style.background = '#2a2a2a';
+    activeCol = null;
+    // If an edit form is open, close it by removing edit/expand params
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('edit')) {
+      urlParams.delete('edit');
+      urlParams.delete('expand');
+      window.location.search = urlParams.toString();
+    }
+  }
+}
+
+// Auto-expand colaborador if expand parameter exists
+window.addEventListener('DOMContentLoaded', function() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const expandId = urlParams.get('expand');
+  if (expandId) {
+    const colButton = document.querySelector(`button[data-col-id="${expandId}"]`);
+    if (colButton) {
+      toggleColaborador(colButton);
+    }
+  }
+});
+</script>
+
 <?php endif; ?>
 </div></body></html>
