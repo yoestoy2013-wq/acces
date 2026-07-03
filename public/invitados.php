@@ -116,23 +116,42 @@ $invitados = $evento ? $invitadoController->listByEvento($eventoId) : [];
 
 <!-- Lista de Invitados -->
 <div class='invitados-container' style='max-width:420px;margin:24px auto;display:flex;flex-direction:column;align-items:center'>
-<div style='width:100%;max-width:350px;display:flex;flex-direction:column;gap:4px'>
+<div style='width:100%;max-width:350px;display:flex;flex-direction:column;gap:2px;max-height:400px;overflow-y:auto'>
 <?php if (!$invitados): ?>
 <div style='text-align:center;padding:16px'>No hay invitados cargados.</div>
 <?php else: foreach ($invitados as $guest): ?>
-<div style='display:flex;flex-direction:column;padding:8px;border:1px solid #555;background:#2a2a2a;border-radius:4px;gap:6px'>
-<div style='display:flex;justify-content:space-between;align-items:center;gap:6px'>
-<div style='font-weight:bold;font-size:15px;line-height:1.2;flex:1'><?=htmlspecialchars($guest['nombre'])?></div>
+<button onclick="toggleGuest(this)" style='background:#2a2a2a;border:1px solid #555;color:#fff;cursor:pointer;padding:8px;border-radius:4px;text-align:left;display:flex;justify-content:space-between;align-items:center;gap:6px;transition:all 0.2s'>
+<span style='font-weight:bold;font-size:14px;flex:1'><?=htmlspecialchars($guest['nombre'])?></span>
 <span style='background:#FF6A00;color:#1e1e1e;font-size:10px;padding:3px 8px;border-radius:3px;font-weight:bold;white-space:nowrap'><?=htmlspecialchars($ticketTypeMap[$guest['ticket_type_id']] ?? $guest['ticket_type_id'])?></span>
-</div>
-<div style='display:flex;gap:4px;justify-content:center'>
-<a href='invitados.php?evento=<?=$eventoId?>&edit=<?=$guest['id']?>'><button style='background:#444;border:1px solid #666;color:#fff;cursor:pointer;font-size:11px;padding:4px 8px;border-radius:3px;flex:1'>Editar</button></a>
-<a href='entrada_digital.php?id=<?=$guest['id']?>' target='_blank'><button style='background:#444;border:1px solid #666;color:#fff;cursor:pointer;font-size:11px;padding:4px 8px;border-radius:3px;flex:1'>Entrada</button></a>
-<a href='invitados.php?evento=<?=$eventoId?>&delete=<?=$guest['id']?>' onclick="return confirm('¿Eliminar invitado?')"><button style='background:#4a2a2a;border:1px solid #664444;color:#ff8888;cursor:pointer;font-size:11px;padding:4px 8px;border-radius:3px;flex:1'>Eliminar</button></a>
+</button>
+<div class='guest-actions' style='display:none;gap:3px;flex-direction:column;margin-bottom:2px'>
+<a href='invitados.php?evento=<?=$eventoId?>&edit=<?=$guest['id']?>'><button style='background:#444;border:1px solid #666;color:#fff;cursor:pointer;font-size:11px;padding:4px 8px;border-radius:3px;width:100%'>Editar</button></a>
+<a href='entrada_digital.php?id=<?=$guest['id']?>' target='_blank'><button style='background:#444;border:1px solid #666;color:#fff;cursor:pointer;font-size:11px;padding:4px 8px;border-radius:3px;width:100%'>Entrada</button></a>
+<a href='invitados.php?evento=<?=$eventoId?>&delete=<?=$guest['id']?>' onclick="return confirm('¿Eliminar invitado?')"><button style='background:#4a2a2a;border:1px solid #664444;color:#ff8888;cursor:pointer;font-size:11px;padding:4px 8px;border-radius:3px;width:100%'>Eliminar</button></a>
 </div>
 <?php endforeach; endif; ?>
 </div>
 </div>
+
+<script>
+let activeGuest = null;
+function toggleGuest(button) {
+  const actions = button.nextElementSibling;
+  if (activeGuest && activeGuest !== button) {
+    activeGuest.nextElementSibling.style.display = 'none';
+    activeGuest.style.background = '#2a2a2a';
+  }
+  if (actions.style.display === 'none') {
+    actions.style.display = 'flex';
+    button.style.background = '#444';
+    activeGuest = button;
+  } else {
+    actions.style.display = 'none';
+    button.style.background = '#2a2a2a';
+    activeGuest = null;
+  }
+}
+</script>
 </div>
 
 <!-- Botón Crear o Formulario -->
