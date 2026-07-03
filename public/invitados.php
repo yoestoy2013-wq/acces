@@ -120,16 +120,15 @@ $invitados = $evento ? $invitadoController->listByEvento($eventoId) : [];
 <?php if (!$invitados): ?>
 <div style='text-align:center;padding:16px'>No hay invitados cargados.</div>
 <?php else: foreach ($invitados as $guest): ?>
-<div style='display:flex;flex-direction:column;padding:8px;border:1px solid #555;background:#2a2a2a;border-radius:4px;gap:0'>
-<div style='margin-bottom:6px'>
-<div style='font-weight:bold;font-size:15px;line-height:1.2'><?=htmlspecialchars($guest['nombre'])?></div>
-<div style='font-size:12px;color:#FF6A00;margin-top:2px'><?=htmlspecialchars($ticketTypeMap[$guest['ticket_type_id']] ?? $guest['ticket_type_id'])?></div>
+<div style='display:flex;flex-direction:column;padding:8px;border:1px solid #555;background:#2a2a2a;border-radius:4px;gap:6px'>
+<div style='display:flex;justify-content:space-between;align-items:center;gap:6px'>
+<div style='font-weight:bold;font-size:15px;line-height:1.2;flex:1'><?=htmlspecialchars($guest['nombre'])?></div>
+<span style='background:#FF6A00;color:#1e1e1e;font-size:10px;padding:3px 8px;border-radius:3px;font-weight:bold;white-space:nowrap'><?=htmlspecialchars($ticketTypeMap[$guest['ticket_type_id']] ?? $guest['ticket_type_id'])?></span>
 </div>
 <div style='display:flex;gap:4px;justify-content:center'>
 <a href='invitados.php?evento=<?=$eventoId?>&edit=<?=$guest['id']?>'><button style='background:#444;border:1px solid #666;color:#fff;cursor:pointer;font-size:11px;padding:4px 8px;border-radius:3px;flex:1'>Editar</button></a>
 <a href='entrada_digital.php?id=<?=$guest['id']?>' target='_blank'><button style='background:#444;border:1px solid #666;color:#fff;cursor:pointer;font-size:11px;padding:4px 8px;border-radius:3px;flex:1'>Entrada</button></a>
 <a href='invitados.php?evento=<?=$eventoId?>&delete=<?=$guest['id']?>' onclick="return confirm('¿Eliminar invitado?')"><button style='background:#4a2a2a;border:1px solid #664444;color:#ff8888;cursor:pointer;font-size:11px;padding:4px 8px;border-radius:3px;flex:1'>Eliminar</button></a>
-</div>
 </div>
 <?php endforeach; endif; ?>
 </div>
