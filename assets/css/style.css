@@ -22,10 +22,10 @@ body {
 
 /* Contenedor principal */
 .app {
+    max-width: 420px;
     width: 100%;
-    max-width: none;
-    margin: 0;
-    padding: 4px 8px;
+    margin: 0 auto;
+    padding: 20px;
     text-align: center;
     position: relative;
     display: flex;
@@ -34,9 +34,9 @@ body {
 
 /* Header container: botón back + título + botón home */
 .header-container {
+    max-width: 420px;
     width: 100%;
-    margin: 0;
-    padding: 2px 8px;
+    margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -70,9 +70,9 @@ body {
 
 /* Contenedor de botones principales (página inicio) */
 .buttons-container {
+    max-width: 420px;
     width: 100%;
-    margin: 0;
-    padding: 0 8px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -106,8 +106,8 @@ body {
 /* Títulos */
 h1 {
     color: #ff7a00;
-    font-size: 24px;
-    margin: 0;
+    font-size: 36px;
+    margin: 20px 0 10px 0;
     word-wrap: break-word;
 }
 
@@ -194,7 +194,7 @@ button:disabled {
     justify-content: center !important;
     align-items: center !important;
     width: 100% !important;
-    padding: 0 8px;
+    max-width: 350px !important;
 }
 
 .toolbar-simple button {
@@ -307,13 +307,13 @@ table tr:hover {
     justify-content: center;
     align-items: center;
     width: 100%;
-    padding: 0 8px;
+    max-width: 350px;
     text-decoration: none;
 }
 
 /* Botones de eventos */
 .event-button {
-    width: 100% !important;
+    width: 350px !important;
     height: 40px !important;
     background: #1E1E1E !important;
     color: #fff !important;
@@ -431,9 +431,9 @@ table tr:hover {
 }
 
 .event-meta {
-    font-size: 13px;
+    font-size: 16px;
     color: #bbb;
-    margin: 0 0 2px 0;
+    margin: 0 0 4px 0;
     font-weight: 400;
     text-align: center;
     text-transform: uppercase;
@@ -461,9 +461,9 @@ table tr:hover {
 
 /* Contenedor de acciones del evento */
 .actions-container {
+    max-width: 420px;
     width: 100%;
-    margin: 24px 0;
-    padding: 0 8px;
+    margin: 24px auto;
     display: flex;
     flex-direction: column;
     align-items: center;
