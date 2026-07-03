@@ -94,7 +94,7 @@ if ($evento && isset($_GET['edit'])) {
 
 $invitados = $evento ? ($filterType && $filterValue ? $invitadoController->filterByEvento($eventoId, $filterType, $filterValue) : $invitadoController->listByEvento($eventoId)) : [];
 ?>
-<!doctype html><html><head><meta charset='utf-8'><title>Invitados</title>
+<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1.0'><title>Invitados</title>
 <link rel='stylesheet' href='assets/css/style.css?v=<?= filemtime(__DIR__ . '/../assets/css/style.css') ?>'>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></head><body><div class='app'>
 

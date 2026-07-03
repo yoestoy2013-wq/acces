@@ -36,15 +36,20 @@ if ($q !== '' || $evento) {
     $results = $checkinController->searchInvitados($q, $eventoId);
 }
 ?>
-<!doctype html><html><head><meta charset='utf-8'><title>Check-in</title>
-<link rel='stylesheet' href='assets/css/style.css'>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></head><body><div class='app' style='max-width:900px;text-align:left'>
-<button class="back-button" onclick="history.back();" title="Volver">
-    <i class="fas fa-chevron-left"></i>
-</button>
-<h1>CHECK-IN</h1>
+<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1.0'><title>Check-in</title>
+<link rel='stylesheet' href='assets/css/style.css?v=<?= filemtime(__DIR__ . '/../assets/css/style.css') ?>'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></head><body><div class='app'>
+<div class="header-container">
+    <button class="back-button" onclick="history.back();" title="Volver">
+        <i class="fas fa-chevron-left"></i>
+    </button>
+    <h1>CHECK-IN</h1>
+    <button class="home-button" onclick="location.href='index.php';" title="Inicio">
+        <i class="fas fa-home"></i>
+    </button>
+</div>
 <?php if ($evento): ?>
-<p>Evento: <?=htmlspecialchars($evento['nombre'])?></p>
+<p class="event-meta"><?=htmlspecialchars($evento['nombre'])?></p>
 <?php endif; ?>
 <?php if ($errors): ?>
 <div class='errors' style='background:#ffe6e6;padding:12px;margin:12px 0;border:1px solid #ffb3b3;'>
