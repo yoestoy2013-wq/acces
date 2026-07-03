@@ -117,7 +117,7 @@ $invitados = $evento ? ($filterType && $filterValue ? $invitadoController->filte
 <div style='width:100%;margin:0;padding:0 8px;display:flex;flex-direction:column;align-items:center;box-sizing:border-box'>
 <?php if (!isset($_GET['filter'])): ?>
 <a href='invitados.php?evento=<?=$eventoId?>&filter=1' style='text-decoration:none;display:flex;justify-content:center;width:100%'>
-<button style='width:350px;max-width:calc(100% - 16px);padding:8px 12px;background:#6A5AFF;color:#fff;border:none;border-radius:4px;cursor:pointer;font-weight:bold;font-size:12px'><i class="fas fa-filter"></i> Filtrar Invitados</button>
+<button style='width:350px;max-width:calc(100% - 16px);padding:12px;background:#6A5AFF;color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:bold;font-size:16px'><i class="fas fa-filter"></i> Filtrar Invitados</button>
 </a>
 </div>
 <?php else: ?>
@@ -126,8 +126,8 @@ $invitados = $evento ? ($filterType && $filterValue ? $invitadoController->filte
 <form method='get' id='filter_form' style='width:350px;max-width:calc(100% - 16px)' onsubmit="return validateFilterForm()">
 <input type='hidden' name='evento' value='<?=$eventoId?>'>
 <input type='hidden' name='filter_value' id='filter_value_hidden' value=''>
-<label style='display:block;margin:4px 0;font-weight:bold;font-size:12px;text-align:center'>Filtrar por:</label>
-<select name='filter_type' id='filter_type' onchange="updateFilterUI()" required style='width:100%;padding:8px;margin:4px 0;box-sizing:border-box;font-size:12px'>
+<label style='display:block;margin:6px 0 2px;font-weight:bold;font-size:15px;text-align:center'>Filtrar por:</label>
+<select name='filter_type' id='filter_type' onchange="updateFilterUI()" required style='width:100%;padding:10px;margin:4px 0;box-sizing:border-box;font-size:16px'>
 <option value=''>-- Selecciona un tipo de filtro --</option>
 <option value='nombre'>Nombre</option>
 <option value='ticket'>Tipo de Ticket</option>
@@ -138,14 +138,14 @@ $invitados = $evento ? ($filterType && $filterValue ? $invitadoController->filte
 
 <!-- Filtro: Nombre -->
 <div id='filter_nombre' style='display:none;width:100%'>
-<label style='display:block;margin:4px 0;font-size:12px'>Buscar por nombre:</label>
-<input type='text' id='nombre_input' placeholder='Ingresa el nombre' style='width:100%;padding:8px;margin:4px 0;box-sizing:border-box;font-size:12px'>
+<label style='display:block;margin:6px 0 2px;font-size:15px'>Buscar por nombre:</label>
+<input type='text' id='nombre_input' placeholder='Ingresa el nombre' style='width:100%;padding:10px;margin:4px 0;box-sizing:border-box;font-size:16px'>
 </div>
 
 <!-- Filtro: Ticket -->
 <div id='filter_ticket' style='display:none;width:100%'>
-<label style='display:block;margin:4px 0;font-size:12px'>Selecciona tipo de ticket:</label>
-<select id='filter_value_ticket' style='width:100%;padding:8px;margin:4px 0;box-sizing:border-box;font-size:12px'>
+<label style='display:block;margin:6px 0 2px;font-size:15px'>Selecciona tipo de ticket:</label>
+<select id='filter_value_ticket' style='width:100%;padding:10px;margin:4px 0;box-sizing:border-box;font-size:16px'>
 <option value=''>-- Selecciona un ticket --</option>
 <?php foreach ($ticketTypes as $type): ?>
 <option value='<?=htmlspecialchars($type['id'])?>'><?=htmlspecialchars($type['nombre'])?> (<?=htmlspecialchars($type['precio'])?>)</option>
@@ -155,8 +155,8 @@ $invitados = $evento ? ($filterType && $filterValue ? $invitadoController->filte
 
 <!-- Filtro: Colaborador -->
 <div id='filter_colaborador' style='display:none;width:100%'>
-<label style='display:block;margin:4px 0;font-size:12px'>Selecciona colaborador:</label>
-<select id='filter_value_colaborador' style='width:100%;padding:8px;margin:4px 0;box-sizing:border-box;font-size:12px'>
+<label style='display:block;margin:6px 0 2px;font-size:15px'>Selecciona colaborador:</label>
+<select id='filter_value_colaborador' style='width:100%;padding:10px;margin:4px 0;box-sizing:border-box;font-size:16px'>
 <option value=''>-- Selecciona un colaborador --</option>
 <?php foreach ($colaboradores as $col): ?>
 <option value='<?=htmlspecialchars($col['id'])?>'><?=htmlspecialchars($col['nombre'])?></option>
@@ -165,9 +165,9 @@ $invitados = $evento ? ($filterType && $filterValue ? $invitadoController->filte
 </div>
 
 <div style='display:flex;gap:4px;width:100%;margin-top:4px'>
-<button type='submit' style='flex:1;padding:8px;background:#6A5AFF;color:#fff;border:none;border-radius:4px;cursor:pointer;font-weight:bold;font-size:12px'>Aplicar Filtro</button>
+<button type='submit' style='flex:1;padding:12px;background:#6A5AFF;color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:bold;font-size:16px'>Aplicar Filtro</button>
 <a href='invitados.php?evento=<?=$eventoId?>' style='flex:1;text-decoration:none'>
-<button type='button' style='width:100%;padding:8px;background:#999;color:#fff;border:none;border-radius:4px;cursor:pointer;font-weight:bold;font-size:12px'>Cancelar</button>
+<button type='button' style='width:100%;padding:12px;background:#999;color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:bold;font-size:16px'>Cancelar</button>
 </a>
 </div>
 </form>
@@ -191,14 +191,14 @@ $invitados = $evento ? ($filterType && $filterValue ? $invitadoController->filte
 <?php if (!$invitados): ?>
 <div style='text-align:center;padding:16px'>No hay invitados cargados.</div>
 <?php else: foreach ($invitados as $guest): ?>
-<button onclick="toggleGuest(this)" data-guest-id="<?=$guest['id']?>" style='background:#2a2a2a;border:1px solid #555;color:#fff;cursor:pointer;padding:8px;border-radius:4px;text-align:left;display:flex;justify-content:space-between;align-items:center;gap:6px;transition:all 0.2s'>
-<span style='font-weight:bold;font-size:14px;flex:1'><?=htmlspecialchars($guest['nombre'])?></span>
-<span style='background:#FF6A00;color:#1e1e1e;font-size:10px;padding:3px 8px;border-radius:3px;font-weight:bold;white-space:nowrap'><?=htmlspecialchars($ticketTypeMap[$guest['ticket_type_id']] ?? $guest['ticket_type_id'])?></span>
+<button onclick="toggleGuest(this)" data-guest-id="<?=$guest['id']?>" style='background:#2a2a2a;border:1px solid #555;color:#fff;cursor:pointer;padding:12px;border-radius:8px;text-align:left;display:flex;justify-content:space-between;align-items:center;gap:8px;transition:all 0.2s'>
+<span style='font-weight:bold;font-size:16px;flex:1'><?=htmlspecialchars($guest['nombre'])?></span>
+<span style='background:#FF6A00;color:#1e1e1e;font-size:12px;padding:4px 10px;border-radius:4px;font-weight:bold;white-space:nowrap'><?=htmlspecialchars($ticketTypeMap[$guest['ticket_type_id']] ?? $guest['ticket_type_id'])?></span>
 </button>
-<div class='guest-actions' style='display:none;gap:3px;flex-direction:column;margin-bottom:2px'>
-<a href='invitados.php?evento=<?=$eventoId?>&edit=<?=$guest['id']?>&expand=<?=$guest['id']?>'><button style='background:#444;border:1px solid #666;color:#fff;cursor:pointer;font-size:11px;padding:4px 8px;border-radius:3px;width:100%'>Editar</button></a>
-<a href='entrada_digital.php?id=<?=$guest['id']?>' target='_blank'><button style='background:#444;border:1px solid #666;color:#fff;cursor:pointer;font-size:11px;padding:4px 8px;border-radius:3px;width:100%'>Entrada</button></a>
-<a href='invitados.php?evento=<?=$eventoId?>&delete=<?=$guest['id']?>&expand=<?=$guest['id']?>' onclick="return confirm('¿Eliminar invitado?')"><button style='background:#4a2a2a;border:1px solid #664444;color:#ff8888;cursor:pointer;font-size:11px;padding:4px 8px;border-radius:3px;width:100%'>Eliminar</button></a>
+<div class='guest-actions' style='display:none;gap:4px;flex-direction:column;margin-bottom:4px'>
+<a href='invitados.php?evento=<?=$eventoId?>&edit=<?=$guest['id']?>&expand=<?=$guest['id']?>'><button style='background:#444;border:1px solid #666;color:#fff;cursor:pointer;font-size:15px;padding:10px;border-radius:6px;width:100%'>Editar</button></a>
+<a href='entrada_digital.php?id=<?=$guest['id']?>' target='_blank'><button style='background:#444;border:1px solid #666;color:#fff;cursor:pointer;font-size:15px;padding:10px;border-radius:6px;width:100%'>Entrada</button></a>
+<a href='invitados.php?evento=<?=$eventoId?>&delete=<?=$guest['id']?>&expand=<?=$guest['id']?>' onclick="return confirm('¿Eliminar invitado?')"><button style='background:#4a2a2a;border:1px solid #664444;color:#ff8888;cursor:pointer;font-size:15px;padding:10px;border-radius:6px;width:100%'>Eliminar</button></a>
 </div>
 <?php endforeach; endif; ?>
 </div>
@@ -308,7 +308,7 @@ function validateFilterForm() {
 <!-- Mostrar botón Crear -->
 <div style='width:100%;margin:8px 0;padding:0 8px;display:flex;flex-direction:column;align-items:center;box-sizing:border-box'>
 <a href='invitados.php?evento=<?=$eventoId?>&form=1' style='text-decoration:none;display:flex;justify-content:center;width:100%'>
-<button style='width:350px;max-width:calc(100% - 16px);padding:8px 12px;background:#FF6A00;color:#fff;border:none;border-radius:4px;cursor:pointer;font-weight:bold;font-size:12px'><i class="fas fa-plus"></i> Crear Invitado</button>
+<button style='width:350px;max-width:calc(100% - 16px);padding:14px;background:#FF6A00;color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:bold;font-size:16px'><i class="fas fa-plus"></i> Crear Invitado</button>
 </a>
 </div>
 <?php else: ?>
@@ -317,10 +317,10 @@ function validateFilterForm() {
 <div style='width:350px;max-width:calc(100% - 16px);padding:16px;background:#1e1e1e;border:1px solid #444;border-radius:4px;display:flex;flex-direction:column;gap:4px;box-sizing:border-box'>
 <form method='post' style='width:100%'>
 <input type='hidden' name='id' value='<?=htmlspecialchars($invitado['id'] ?? '')?>'>
-<label style='display:block;margin:4px 0;font-size:11px;font-weight:bold'>Nombre y apellido (obligatorio)</label>
-<input name='nombre' placeholder='Nombre y apellido' value='<?=htmlspecialchars($invitado['nombre'] ?? '')?>' required style='width:100%;padding:8px;margin:2px 0;box-sizing:border-box;font-size:12px'>
-<label style='display:block;margin:4px 0;font-size:11px;font-weight:bold'>Tipo de ticket (obligatorio)</label>
-<select name='ticket_type_id' required style='width:100%;padding:8px;margin:2px 0;box-sizing:border-box;font-size:12px'>
+<label style='display:block;margin:8px 0 2px;font-size:15px;font-weight:bold'>Nombre y apellido (obligatorio)</label>
+<input name='nombre' placeholder='Nombre y apellido' value='<?=htmlspecialchars($invitado['nombre'] ?? '')?>' required style='width:100%;padding:10px;margin:2px 0;box-sizing:border-box;font-size:16px'>
+<label style='display:block;margin:8px 0 2px;font-size:15px;font-weight:bold'>Tipo de ticket (obligatorio)</label>
+<select name='ticket_type_id' required style='width:100%;padding:10px;margin:2px 0;box-sizing:border-box;font-size:16px'>
 <?php if (!$ticketTypes): ?>
 <option value=''>No hay tipos de ticket disponibles</option>
 <?php else: ?>
@@ -330,8 +330,8 @@ function validateFilterForm() {
 <?php endforeach; ?>
 <?php endif; ?>
 </select>
-<label style='display:block;margin:4px 0;font-size:11px;font-weight:bold'>Colaborador (opcional)</label>
-<select name='colaborador_id' style='width:100%;padding:8px;margin:2px 0;box-sizing:border-box;font-size:12px'>
+<label style='display:block;margin:8px 0 2px;font-size:15px;font-weight:bold'>Colaborador (opcional)</label>
+<select name='colaborador_id' style='width:100%;padding:10px;margin:2px 0;box-sizing:border-box;font-size:16px'>
 <?php if (!$colaboradores): ?>
 <option value=''>No hay colaboradores disponibles</option>
 <?php else: ?>
@@ -341,11 +341,11 @@ function validateFilterForm() {
 <?php endforeach; ?>
 <?php endif; ?>
 </select>
-<label style='display:block;margin:4px 0;font-size:11px;font-weight:bold'>Teléfono (opcional)</label>
-<input name='telefono' placeholder='Teléfono' value='<?=htmlspecialchars($invitado['telefono'] ?? '')?>' style='width:100%;padding:8px;margin:2px 0;box-sizing:border-box;font-size:12px'>
-<label style='display:block;margin:4px 0;font-size:11px;font-weight:bold'>Observaciones (opcional)</label>
-<textarea name='observaciones' placeholder='Observaciones' style='width:100%;padding:8px;margin:2px 0;box-sizing:border-box;height:24px;resize:none;font-size:12px'><?=htmlspecialchars($invitado['observaciones'] ?? '')?></textarea>
-<button type='submit' style='width:100%;padding:8px 12px;margin-top:4px;background:#FF6A00;color:#fff;border:none;border-radius:4px;cursor:pointer;font-weight:bold;font-size:12px'><?=isset($invitado['id']) ? 'Actualizar' : 'Crear'?></button>
+<label style='display:block;margin:8px 0 2px;font-size:15px;font-weight:bold'>Teléfono (opcional)</label>
+<input name='telefono' placeholder='Teléfono' value='<?=htmlspecialchars($invitado['telefono'] ?? '')?>' style='width:100%;padding:10px;margin:2px 0;box-sizing:border-box;font-size:16px'>
+<label style='display:block;margin:8px 0 2px;font-size:15px;font-weight:bold'>Observaciones (opcional)</label>
+<textarea name='observaciones' placeholder='Observaciones' style='width:100%;padding:10px;margin:2px 0;box-sizing:border-box;height:60px;resize:none;font-size:16px'><?=htmlspecialchars($invitado['observaciones'] ?? '')?></textarea>
+<button type='submit' style='width:100%;padding:14px;margin-top:8px;background:#FF6A00;color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:bold;font-size:16px'><?=isset($invitado['id']) ? 'Actualizar' : 'Crear'?></button>
 </form>
 </div>
 </div>
