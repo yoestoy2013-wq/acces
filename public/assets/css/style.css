@@ -22,10 +22,10 @@ body {
 
 /* Contenedor principal */
 .app {
-    max-width: 420px;
     width: 100%;
-    margin: 0 auto;
-    padding: 20px;
+    max-width: none;
+    margin: 0;
+    padding: 12px 8px;
     text-align: center;
     position: relative;
     display: flex;
@@ -34,9 +34,9 @@ body {
 
 /* Header container: botón back + título + botón home */
 .header-container {
-    max-width: 420px;
     width: 100%;
-    margin: 0 auto;
+    margin: 0;
+    padding: 0 8px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -70,9 +70,9 @@ body {
 
 /* Contenedor de botones principales (página inicio) */
 .buttons-container {
-    max-width: 420px;
     width: 100%;
-    margin: 0 auto;
+    margin: 0;
+    padding: 0 8px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -194,7 +194,7 @@ button:disabled {
     justify-content: center !important;
     align-items: center !important;
     width: 100% !important;
-    max-width: 350px !important;
+    padding: 0 8px;
 }
 
 .toolbar-simple button {
@@ -307,13 +307,13 @@ table tr:hover {
     justify-content: center;
     align-items: center;
     width: 100%;
-    max-width: 350px;
+    padding: 0 8px;
     text-decoration: none;
 }
 
 /* Botones de eventos */
 .event-button {
-    width: 350px !important;
+    width: 100% !important;
     height: 40px !important;
     background: #1E1E1E !important;
     color: #fff !important;
@@ -462,9 +462,9 @@ table tr:hover {
 
 /* Contenedor de acciones del evento */
 .actions-container {
-    max-width: 420px;
     width: 100%;
-    margin: 24px auto;
+    margin: 24px 0;
+    padding: 0 8px;
     display: flex;
     flex-direction: column;
     align-items: center;

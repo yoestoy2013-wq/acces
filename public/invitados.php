@@ -112,16 +112,16 @@ $invitados = $evento ? ($filterType && $filterValue ? $invitadoController->filte
 <p class="event-meta"><?=htmlspecialchars($evento['nombre'])?></p>
 
 <!-- Filtro de Invitados -->
-<div style='max-width:420px;margin:6px auto;display:flex;flex-direction:column;align-items:center'>
+<div style='width:100%;margin:6px 0;padding:0 8px;display:flex;flex-direction:column;align-items:center;box-sizing:border-box'>
 <?php if (!isset($_GET['filter'])): ?>
 <a href='invitados.php?evento=<?=$eventoId?>&filter=1' style='text-decoration:none;width:100%'>
-<button style='width:350px;padding:12px 24px;background:#6A5AFF;color:#fff;border:none;border-radius:4px;cursor:pointer;font-weight:bold;font-size:14px'><i class="fas fa-filter"></i> Filtrar Invitados</button>
+<button style='width:100%;padding:12px 24px;background:#6A5AFF;color:#fff;border:none;border-radius:4px;cursor:pointer;font-weight:bold;font-size:14px'><i class="fas fa-filter"></i> Filtrar Invitados</button>
 </a>
 </div>
 <?php else: ?>
 <!-- Formulario de Filtro -->
-<div style='max-width:420px;margin:6px auto;display:flex;flex-direction:column;align-items:center'>
-<form method='get' id='filter_form' style='width:100%;max-width:350px' onsubmit="return validateFilterForm()">
+<div style='width:100%;margin:6px 0;padding:0 8px;display:flex;flex-direction:column;align-items:center;box-sizing:border-box'>
+<form method='get' id='filter_form' style='width:100%' onsubmit="return validateFilterForm()">
 <input type='hidden' name='evento' value='<?=$eventoId?>'>
 <input type='hidden' name='filter_value' id='filter_value_hidden' value=''>
 <label style='display:block;margin:8px 0;font-weight:bold'>Filtrar por:</label>
@@ -184,8 +184,8 @@ $invitados = $evento ? ($filterType && $filterValue ? $invitadoController->filte
 <?php if ($evento): ?>
 
 <!-- Lista de Invitados -->
-<div class='invitados-container' style='max-width:420px;margin:24px auto;display:flex;flex-direction:column;align-items:center'>
-<div style='width:100%;max-width:350px;display:flex;flex-direction:column;gap:2px;max-height:400px;overflow-y:auto'>
+<div class='invitados-container' style='width:100%;margin:24px 0;padding:0 8px;display:flex;flex-direction:column;align-items:center;box-sizing:border-box'>
+<div style='width:100%;display:flex;flex-direction:column;gap:2px;max-height:400px;overflow-y:auto'>
 <?php if (!$invitados): ?>
 <div style='text-align:center;padding:16px'>No hay invitados cargados.</div>
 <?php else: foreach ($invitados as $guest): ?>
@@ -304,15 +304,15 @@ function validateFilterForm() {
 <!-- Botón Crear o Formulario -->
 <?php if (!isset($_GET['form']) && !isset($_GET['edit'])): ?>
 <!-- Mostrar botón Crear -->
-<div style='max-width:420px;margin:6px auto;display:flex;flex-direction:column;align-items:center'>
-<a href='invitados.php?evento=<?=$eventoId?>&form=1' style='text-decoration:none'>
-<button style='width:350px;padding:12px 24px;background:#FF6A00;color:#fff;border:none;border-radius:4px;cursor:pointer;font-weight:bold;font-size:16px'><i class="fas fa-plus"></i> Crear Invitado</button>
+<div style='width:100%;margin:6px 0;padding:0 8px;display:flex;flex-direction:column;align-items:center;box-sizing:border-box'>
+<a href='invitados.php?evento=<?=$eventoId?>&form=1' style='text-decoration:none;width:100%'>
+<button style='width:100%;padding:12px 24px;background:#FF6A00;color:#fff;border:none;border-radius:4px;cursor:pointer;font-weight:bold;font-size:16px'><i class="fas fa-plus"></i> Crear Invitado</button>
 </a>
 </div>
 <?php else: ?>
 <!-- Mostrar formulario -->
-<div class='form-container' style='max-width:420px;margin:6px auto;display:flex;flex-direction:column;align-items:center'>
-<form method='post' style='width:100%;max-width:350px'>
+<div class='form-container' style='width:100%;margin:6px 0;padding:0 8px;display:flex;flex-direction:column;align-items:center;box-sizing:border-box'>
+<form method='post' style='width:100%'>
 <input type='hidden' name='id' value='<?=htmlspecialchars($invitado['id'] ?? '')?>'>
 <label style='display:block;margin:8px 0'>Nombre y apellido (obligatorio)</label>
 <input name='nombre' placeholder='Nombre y apellido' value='<?=htmlspecialchars($invitado['nombre'] ?? '')?>' required style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box'>
