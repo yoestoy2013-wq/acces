@@ -3,6 +3,7 @@ require_once __DIR__ . '/../controllers/InvitadoController.php';
 require_once __DIR__ . '/../models/Evento.php';
 
 $eventoId = isset($_GET['evento']) ? (int)$_GET['evento'] : 0;
+$expandId = isset($_GET['expand']) ? (int)$_GET['expand'] : null;
 $eventoModel = new Evento();
 $invitadoController = new InvitadoController();
 $evento = $eventoModel->find($eventoId);
@@ -54,13 +55,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $evento) {
             if (isset($_POST['id']) && $_POST['id'] !== '') {
                 $invitadoId = (int)$_POST['id'];
                 if ($invitadoController->update($invitadoId, $formData)) {
-                    header('Location: invitados.php?evento=' . $eventoId);
+                    $redirectUrl = 'invitados.php?evento=' . $eventoId;
+                    if ($expandId) $redirectUrl .= '&expand=' . $expandId;
+                    header('Location: ' . $redirectUrl);
                     exit;
                 }
                 $errors[] = 'No se pudo actualizar el invitado.';
             } else {
                 $invitadoController->create($eventoId, $formData);
-                header('Location: invitados.php?evento=' . $eventoId);
+                $redirectUrl = 'invitados.php?evento=' . $eventoId;
+                if ($expandId) $redirectUrl .= '&expand=' . $expandId;
+                header('Location: ' . $redirectUrl);
                 exit;
             }
         } catch (Throwable $e) {
@@ -120,14 +125,14 @@ $invitados = $evento ? $invitadoController->listByEvento($eventoId) : [];
 <?php if (!$invitados): ?>
 <div style='text-align:center;padding:16px'>No hay invitados cargados.</div>
 <?php else: foreach ($invitados as $guest): ?>
-<button onclick="toggleGuest(this)" style='background:#2a2a2a;border:1px solid #555;color:#fff;cursor:pointer;padding:8px;border-radius:4px;text-align:left;display:flex;justify-content:space-between;align-items:center;gap:6px;transition:all 0.2s'>
+<button onclick="toggleGuest(this)" data-guest-id="<?=$guest['id']?>" style='background:#2a2a2a;border:1px solid #555;color:#fff;cursor:pointer;padding:8px;border-radius:4px;text-align:left;display:flex;justify-content:space-between;align-items:center;gap:6px;transition:all 0.2s'>
 <span style='font-weight:bold;font-size:14px;flex:1'><?=htmlspecialchars($guest['nombre'])?></span>
 <span style='background:#FF6A00;color:#1e1e1e;font-size:10px;padding:3px 8px;border-radius:3px;font-weight:bold;white-space:nowrap'><?=htmlspecialchars($ticketTypeMap[$guest['ticket_type_id']] ?? $guest['ticket_type_id'])?></span>
 </button>
 <div class='guest-actions' style='display:none;gap:3px;flex-direction:column;margin-bottom:2px'>
-<a href='invitados.php?evento=<?=$eventoId?>&edit=<?=$guest['id']?>'><button style='background:#444;border:1px solid #666;color:#fff;cursor:pointer;font-size:11px;padding:4px 8px;border-radius:3px;width:100%'>Editar</button></a>
+<a href='invitados.php?evento=<?=$eventoId?>&edit=<?=$guest['id']?>&expand=<?=$guest['id']?>'><button style='background:#444;border:1px solid #666;color:#fff;cursor:pointer;font-size:11px;padding:4px 8px;border-radius:3px;width:100%'>Editar</button></a>
 <a href='entrada_digital.php?id=<?=$guest['id']?>' target='_blank'><button style='background:#444;border:1px solid #666;color:#fff;cursor:pointer;font-size:11px;padding:4px 8px;border-radius:3px;width:100%'>Entrada</button></a>
-<a href='invitados.php?evento=<?=$eventoId?>&delete=<?=$guest['id']?>' onclick="return confirm('¿Eliminar invitado?')"><button style='background:#4a2a2a;border:1px solid #664444;color:#ff8888;cursor:pointer;font-size:11px;padding:4px 8px;border-radius:3px;width:100%'>Eliminar</button></a>
+<a href='invitados.php?evento=<?=$eventoId?>&delete=<?=$guest['id']?>&expand=<?=$guest['id']?>' onclick="return confirm('¿Eliminar invitado?')"><button style='background:#4a2a2a;border:1px solid #664444;color:#ff8888;cursor:pointer;font-size:11px;padding:4px 8px;border-radius:3px;width:100%'>Eliminar</button></a>
 </div>
 <?php endforeach; endif; ?>
 </div>
@@ -135,6 +140,7 @@ $invitados = $evento ? $invitadoController->listByEvento($eventoId) : [];
 
 <script>
 let activeGuest = null;
+
 function toggleGuest(button) {
   const actions = button.nextElementSibling;
   if (activeGuest && activeGuest !== button) {
@@ -151,6 +157,18 @@ function toggleGuest(button) {
     activeGuest = null;
   }
 }
+
+// Auto-expand guest if expand parameter exists
+window.addEventListener('DOMContentLoaded', function() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const expandId = urlParams.get('expand');
+  if (expandId) {
+    const guestButton = document.querySelector(`button[data-guest-id="${expandId}"]`);
+    if (guestButton) {
+      toggleGuest(guestButton);
+    }
+  }
+});
 </script>
 </div>
 
