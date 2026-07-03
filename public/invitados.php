@@ -185,7 +185,7 @@ $invitados = $evento ? ($filterType && $filterValue ? $invitadoController->filte
 
 <!-- Lista de Invitados -->
 <div class='invitados-container' style='width:100%;margin:0;padding:0 8px;display:flex;flex-direction:column;align-items:center;box-sizing:border-box'>
-<div style='width:100%;display:flex;flex-direction:column;gap:2px;max-height:calc(100vh - 240px);overflow-y:auto'>
+<div style='width:350px;max-width:calc(100% - 16px);display:flex;flex-direction:column;gap:2px;max-height:calc(100vh - 240px);overflow-y:auto'>
 <?php if (!$invitados): ?>
 <div style='text-align:center;padding:16px'>No hay invitados cargados.</div>
 <?php else: foreach ($invitados as $guest): ?>
