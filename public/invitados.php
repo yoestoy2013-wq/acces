@@ -120,15 +120,15 @@ $invitados = $evento ? $invitadoController->listByEvento($eventoId) : [];
 <?php if (!$invitados): ?>
 <div style='text-align:center;padding:16px'>No hay invitados cargados.</div>
 <?php else: foreach ($invitados as $guest): ?>
-<div style='display:flex;justify-content:space-between;align-items:center;padding:8px;border:1px solid #555;background:#2a2a2a;border-radius:4px;gap:8px'>
-<div style='flex:1'>
-<div style='font-weight:bold'><?=htmlspecialchars($guest['nombre'])?></div>
-<div style='font-size:12px;color:#bbb'><?=htmlspecialchars($ticketTypeMap[$guest['ticket_type_id']] ?? $guest['ticket_type_id'])?></div>
+<div style='display:flex;flex-direction:column;padding:6px;border:1px solid #555;background:#2a2a2a;border-radius:4px;gap:0'>
+<div style='margin-bottom:4px'>
+<div style='font-weight:bold;font-size:14px'><?=htmlspecialchars($guest['nombre'])?></div>
+<div style='font-size:11px;color:#bbb'><?=htmlspecialchars($ticketTypeMap[$guest['ticket_type_id']] ?? $guest['ticket_type_id'])?></div>
 </div>
-<div style='display:flex;gap:6px;white-space:nowrap'>
-<a href='invitados.php?evento=<?=$eventoId?>&edit=<?=$guest['id']?>'><button style='background:none;border:none;cursor:pointer;font-size:16px'>✏️</button></a>
-<a href='entrada_digital.php?id=<?=$guest['id']?>' target='_blank'><button style='background:none;border:none;cursor:pointer;font-size:16px'>👁</button></a>
-<a href='invitados.php?evento=<?=$eventoId?>&delete=<?=$guest['id']?>' onclick="return confirm('¿Eliminar invitado?')"><button style='background:none;border:none;cursor:pointer;font-size:16px'>🗑️</button></a>
+<div style='display:flex;gap:4px;justify-content:center'>
+<a href='invitados.php?evento=<?=$eventoId?>&edit=<?=$guest['id']?>'><button style='background:none;border:none;cursor:pointer;font-size:14px'>✏️</button></a>
+<a href='entrada_digital.php?id=<?=$guest['id']?>' target='_blank'><button style='background:none;border:none;cursor:pointer;font-size:14px'>👁</button></a>
+<a href='invitados.php?evento=<?=$eventoId?>&delete=<?=$guest['id']?>' onclick="return confirm('¿Eliminar invitado?')"><button style='background:none;border:none;cursor:pointer;font-size:14px'>🗑️</button></a>
 </div>
 </div>
 <?php endforeach; endif; ?>
