@@ -114,17 +114,17 @@ $invitados = $evento ? ($filterType && $filterValue ? $invitadoController->filte
 <!-- Filtro de Invitados -->
 <div style='width:100%;margin:0;padding:0 8px;display:flex;flex-direction:column;align-items:center;box-sizing:border-box'>
 <?php if (!isset($_GET['filter'])): ?>
-<a href='invitados.php?evento=<?=$eventoId?>&filter=1' style='text-decoration:none;width:100%'>
-<button style='width:100%;padding:8px 12px;background:#6A5AFF;color:#fff;border:none;border-radius:4px;cursor:pointer;font-weight:bold;font-size:12px'><i class="fas fa-filter"></i> Filtrar Invitados</button>
+<a href='invitados.php?evento=<?=$eventoId?>&filter=1' style='text-decoration:none;display:flex;justify-content:center;width:100%'>
+<button style='width:350px;max-width:calc(100% - 16px);padding:8px 12px;background:#6A5AFF;color:#fff;border:none;border-radius:4px;cursor:pointer;font-weight:bold;font-size:12px'><i class="fas fa-filter"></i> Filtrar Invitados</button>
 </a>
 </div>
 <?php else: ?>
 <!-- Formulario de Filtro -->
 <div style='width:100%;margin:0;padding:0 8px;display:flex;flex-direction:column;align-items:center;box-sizing:border-box'>
-<form method='get' id='filter_form' style='width:100%' onsubmit="return validateFilterForm()">
+<form method='get' id='filter_form' style='width:350px;max-width:calc(100% - 16px)' onsubmit="return validateFilterForm()">
 <input type='hidden' name='evento' value='<?=$eventoId?>'>
 <input type='hidden' name='filter_value' id='filter_value_hidden' value=''>
-<label style='display:block;margin:4px 0;font-weight:bold;font-size:12px'>Filtrar por:</label>
+<label style='display:block;margin:4px 0;font-weight:bold;font-size:12px;text-align:center'>Filtrar por:</label>
 <select name='filter_type' id='filter_type' onchange="updateFilterUI()" required style='width:100%;padding:8px;margin:4px 0;box-sizing:border-box;font-size:12px'>
 <option value=''>-- Selecciona un tipo de filtro --</option>
 <option value='nombre'>Nombre</option>
@@ -304,14 +304,15 @@ function validateFilterForm() {
 <!-- Botón Crear o Formulario -->
 <?php if (!isset($_GET['form']) && !isset($_GET['edit'])): ?>
 <!-- Mostrar botón Crear -->
-<div style='width:100%;margin:0;padding:0 8px;display:flex;flex-direction:column;align-items:center;box-sizing:border-box'>
-<a href='invitados.php?evento=<?=$eventoId?>&form=1' style='text-decoration:none;width:100%'>
-<button style='width:100%;padding:8px 12px;background:#FF6A00;color:#fff;border:none;border-radius:4px;cursor:pointer;font-weight:bold;font-size:12px'><i class="fas fa-plus"></i> Crear Invitado</button>
+<div style='width:100%;margin:8px 0;padding:0 8px;display:flex;flex-direction:column;align-items:center;box-sizing:border-box'>
+<a href='invitados.php?evento=<?=$eventoId?>&form=1' style='text-decoration:none;display:flex;justify-content:center;width:100%'>
+<button style='width:350px;max-width:calc(100% - 16px);padding:8px 12px;background:#FF6A00;color:#fff;border:none;border-radius:4px;cursor:pointer;font-weight:bold;font-size:12px'><i class="fas fa-plus"></i> Crear Invitado</button>
 </a>
 </div>
 <?php else: ?>
 <!-- Mostrar formulario -->
-<div class='form-container' style='width:100%;margin:0;padding:0 8px;display:flex;flex-direction:column;align-items:center;box-sizing:border-box'>
+<div class='form-container' style='width:100%;margin:8px 0;padding:0 8px;display:flex;flex-direction:column;align-items:center;box-sizing:border-box'>
+<div style='width:350px;max-width:calc(100% - 16px);padding:16px;background:#1e1e1e;border:1px solid #444;border-radius:4px;display:flex;flex-direction:column;gap:4px;box-sizing:border-box'>
 <form method='post' style='width:100%'>
 <input type='hidden' name='id' value='<?=htmlspecialchars($invitado['id'] ?? '')?>'>
 <label style='display:block;margin:4px 0;font-size:11px;font-weight:bold'>Nombre y apellido (obligatorio)</label>
@@ -328,7 +329,7 @@ function validateFilterForm() {
 <?php endif; ?>
 </select>
 <label style='display:block;margin:4px 0;font-size:11px;font-weight:bold'>Colaborador (opcional)</label>
-<select name='colaborador_id' style='width:100%;padding:12px;margin:8px 0;box-sizing:border-box'>
+<select name='colaborador_id' style='width:100%;padding:8px;margin:2px 0;box-sizing:border-box;font-size:12px'>
 <?php if (!$colaboradores): ?>
 <option value=''>No hay colaboradores disponibles</option>
 <?php else: ?>
@@ -344,6 +345,7 @@ function validateFilterForm() {
 <textarea name='observaciones' placeholder='Observaciones' style='width:100%;padding:8px;margin:2px 0;box-sizing:border-box;height:24px;resize:none;font-size:12px'><?=htmlspecialchars($invitado['observaciones'] ?? '')?></textarea>
 <button type='submit' style='width:100%;padding:8px 12px;margin-top:4px;background:#FF6A00;color:#fff;border:none;border-radius:4px;cursor:pointer;font-weight:bold;font-size:12px'><?=isset($invitado['id']) ? 'Actualizar' : 'Crear'?></button>
 </form>
+</div>
 </div>
 <?php endif; ?>
 <?php endif; ?>
